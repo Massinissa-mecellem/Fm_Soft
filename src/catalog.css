@@ -221,6 +221,33 @@
   to { transform: translateX(calc(-50% - 14px)); }
 }
 
+.developer-visual {
+  min-height: 540px;
+  transform: scale(0.94);
+  margin: -5px 0 -25px;
+}
+
+.developer-photo {
+  width: 430px;
+  height: 480px;
+}
+
+.contact-combined {
+  display: flex;
+  flex-direction: column;
+  gap: 58px;
+}
+
+.contact-combined .map-card {
+  width: 100%;
+}
+
+.partners-track img {
+  width: 430px;
+  height: 150px;
+  margin-right: 20px;
+}
+
 .product-rating,
 .modal-rating {
   display: flex;

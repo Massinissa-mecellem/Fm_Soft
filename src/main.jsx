@@ -271,11 +271,34 @@ function App() {
         </div>
       </section>
 
-      <section id="contact" className="contact-section section"><div className="container contact-grid"><div><div className="eyebrow muted">Une question ?</div><h2>Construisons la suite <em>ensemble.</em></h2><p>Parlez-nous de votre projet. Un conseiller FM Soft vous répondra dans les meilleurs délais.</p><div className="contact-details"><a href="+213 (0) 791 19 78 42"><span><Phone size={18} /></span><div><small>Appelez-nous</small><b>+213 (0) 791 19 78 42</b></div></a><a href="fmsoft.infos@gmail.com"><span><Mail size={18} /></span><div><small>Écrivez-nous</small><b>fmsoft.infos@gmail.com</b></div></a></div></div><form className="contact-form" onSubmit={(event) => { event.preventDefault(); setContactSent(true) }}><div className="form-row"><label>Votre nom<input required placeholder="Nom et prénom" /></label><label>Téléphone<input required placeholder="+213 ..." /></label></div><label>Votre adresse e-mail<input required type="email" placeholder="vous@entreprise.com" /></label><label>Votre message<textarea required rows="4" placeholder="Comment pouvons-nous vous aider ?" /></label><button className="button button-primary" type="submit">{contactSent ? <>Message envoyé <Check size={17} /></> : <>Envoyer le message <Send size={17} /></>}</button></form></div></section>
+      <section id="contact" className="contact-section section">
+        <div className="container contact-combined">
+          <div className="contact-grid">
+            <div>
+              <div className="eyebrow muted">Une question ?</div>
+              <h2>Construisons la suite <em>ensemble.</em></h2>
+              <p>Parlez-nous de votre projet. Un conseiller FM Soft vous répondra dans les meilleurs délais.</p>
+              <div className="contact-details">
+                <a href="tel:+213791197842"><span><Phone size={18} /></span><div><small>Appelez-nous</small><b>+213 (0) 791 19 78 42</b></div></a>
+                <a href="mailto:fmsoft.infos@gmail.com"><span><Mail size={18} /></span><div><small>Écrivez-nous</small><b>fmsoft.infos@gmail.com</b></div></a>
+              </div>
+            </div>
+            <form className="contact-form" onSubmit={(event) => { event.preventDefault(); setContactSent(true) }}>
+              <div className="form-row"><label>Votre nom<input required placeholder="Nom et prénom" /></label><label>Téléphone<input required placeholder="+213 ..." /></label></div>
+              <label>Votre adresse e-mail<input required type="email" placeholder="vous@entreprise.com" /></label>
+              <label>Votre message<textarea required rows="4" placeholder="Comment pouvons-nous vous aider ?" /></label>
+              <button className="button button-primary" type="submit">{contactSent ? <>Message envoyé <Check size={17} /></> : <>Envoyer le message <Send size={17} /></>}</button>
+            </form>
+          </div>
+          <div className="map-card">
+            <div className="map-placeholder"><iframe title="Localisation FM Soft à Tizi Ouzou" src="https://www.google.com/maps?q=93+Rue+Abane+Ramdane,+Tizi+Ouzou,+Algeria,+15000&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen /></div>
+            <div className="address-card"><div className="eyebrow muted">Nous rendre visite</div><h3>Notre adresse</h3><p><MapPin size={17} /> 93 Rue Abane Ramdane<br />Tizi Ouzou, Algeria, 15000</p><a className="arrow-link" href="https://www.google.com/maps/search/?api=1&query=93+Rue+Abane+Ramdane,+Tizi+Ouzou,+Algeria,+15000" target="_blank" rel="noreferrer">Ouvrir dans Google Maps <ArrowRight size={16} /></a></div>
+          </div>
+        </div>
+      </section>
 
       <section className="partners-section section"><div className="container"><div className="section-heading centered"><div><div className="eyebrow muted">Ils nous font confiance</div><h2>Nos partenaires de <em>confiance.</em></h2></div></div><p className="partners-intro">Nous sommes fiers d'accompagner des entreprises, établissements et institutions qui partagent notre exigence de qualité.</p><div className="partners-marquee"><div className="partners-track"><img src="/partenaires.jpg" alt="Logos des partenaires de confiance de FM Soft" /><img src="/partenaires.jpg" alt="" aria-hidden="true" /></div></div></div></section>
 
-      <section className="map-section"><div className="container"><div className="map-card"><div className="map-placeholder"><iframe title="Localisation FM Soft à Tizi Ouzou" src="https://www.google.com/maps?q=93+Rue+Abane+Ramdane,+Tizi+Ouzou,+Algeria,+15000&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen /></div><div className="address-card"><div className="eyebrow muted">Nous rendre visite</div><h3>Notre adresse</h3><p><MapPin size={17} /> 93 Rue Abane Ramdane<br />Tizi Ouzou, Algeria, 15000</p><a className="arrow-link" href="https://www.google.com/maps/search/?api=1&query=93+Rue+Abane+Ramdane,+Tizi+Ouzou,+Algeria,+15000" target="_blank" rel="noreferrer">Ouvrir dans Google Maps <ArrowRight size={16} /></a></div></div></div></section>
     </main>
 
     <footer className="footer"><div className="container footer-main"><div><Brand compact /><p>Des solutions simples et fiables pour faire grandir votre activité.</p><div className="socials"><a href="#footer" aria-label="Facebook"><Facebook size={17} /></a><a href="#footer" aria-label="Instagram"><Instagram size={17} /></a><a href="#footer" aria-label="Youtube"><Youtube size={17} /></a></div></div><div><h4>Navigation</h4><a href="#accueil">Accueil</a><a href="/produits">Produits</a><a href="#a-propos">À propos</a><a href="#contact">Contact</a></div><div><h4>Nos solutions</h4><a href="/produits">Logiciels de gestion</a><a href="/produits">Matériel informatique</a><a href="/produits">Demander un devis</a><a href="#contact">Support client</a></div><div><h4>Contact</h4><a href="
