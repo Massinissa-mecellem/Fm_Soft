@@ -43,6 +43,10 @@ npm run server
 
 L'API est disponible sur `http://localhost:3001`.
 
+Pour vérifier que l'API utilise bien votre base PostgreSQL, appelez `GET /api/health`. La réponse indique le nom exact de la base (`connection.database`), le schéma, le serveur PostgreSQL et la présence réelle des tables `categorie` et `produits`.
+
+L'API est compatible avec le schéma déjà créé dans votre base : table `categorie` avec `categorie_id`, et table `produits` avec `produit_id`, `name`, `categorie_id`, `image` et la colonne de quantité existante.
+
 ### Créer un produit
 
 ```http

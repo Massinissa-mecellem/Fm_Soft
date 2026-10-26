@@ -12,22 +12,40 @@ app.use(cors())
 app.use(express.json({ limit: '1mb' }))
 
 const productFields = `
-  p.id_produit,
-  p.nom,
+  p.produit_id AS id_produit,
+  p.name AS nom,
   p.type,
-  p.quantite,
+  p."quantit‚" AS quantite,
   p.prix,
   p.description,
   p.date_creation,
-  p.date_mise_a_jour,
-  p.id_categorie,
-  c.nom AS categorie_nom
+  p.date_mis_a_jour AS date_mise_a_jour,
+  p.categorie_id AS id_categorie,
+  c.nom AS categorie_nom,
+  p.image
 `
 
 app.get('/api/health', async (_request, response, next) => {
   try {
-    await pool.query('SELECT 1')
-    response.json({ status: 'ok', database: 'connected' })
+    const connection = await pool.query(`
+      SELECT
+        current_database() AS database,
+        current_schema() AS schema,
+        inet_server_addr()::text AS server,
+        inet_server_port() AS port
+    `)
+    const tables = await pool.query(`
+      SELECT
+        to_regclass('public.categorie') IS NOT NULL AS categorie_exists,
+        to_regclass('public.produits') IS NOT NULL AS produits_exists
+    `)
+
+    response.json({
+      status: 'ok',
+      database: 'connected',
+      connection: connection.rows[0],
+      tables: tables.rows[0]
+    })
   } catch (error) {
     next(error)
   }
@@ -36,10 +54,33 @@ app.get('/api/health', async (_request, response, next) => {
 app.get('/api/categories', async (_request, response, next) => {
   try {
     const result = await pool.query(
-      'SELECT id_categ, nom, description FROM categorie ORDER BY nom ASC'
+      'SELECT categorie_id AS id_categ, nom, description FROM categorie ORDER BY nom ASC'
     )
     response.json(result.rows)
   } catch (error) {
+    next(error)
+  }
+})
+
+app.post('/api/categories', async (request, response, next) => {
+  const { nom, description } = request.body
+
+  if (!nom || !String(nom).trim()) {
+    return response.status(400).json({ error: 'Le nom de la catégorie est obligatoire.' })
+  }
+
+  try {
+    const result = await pool.query(
+      `INSERT INTO categorie (nom, description)
+       VALUES ($1, $2)
+       RETURNING categorie_id AS id_categ, nom, description`,
+      [String(nom).trim(), description || null]
+    )
+    response.status(201).json(result.rows[0])
+  } catch (error) {
+    if (error.code === '23505') {
+      return response.status(409).json({ error: 'Cette catégorie existe déjà.' })
+    }
     next(error)
   }
 })
@@ -48,8 +89,8 @@ app.get('/api/products', async (_request, response, next) => {
   try {
     const result = await pool.query(`
       SELECT ${productFields}
-      FROM produit p
-      JOIN categorie c ON c.id_categ = p.id_categorie
+      FROM produits p
+      JOIN categorie c ON c.categorie_id = p.categorie_id
       ORDER BY p.date_creation DESC
     `)
     response.json(result.rows)
@@ -59,9 +100,11 @@ app.get('/api/products', async (_request, response, next) => {
 })
 
 app.post('/api/products', async (request, response, next) => {
-  const { nom, type, quantite, prix, description, id_categorie } = request.body
+  const { nom, name, type, quantite, prix, description, id_categorie, categorie_id, image } = request.body
+  const productName = nom || name
+  const categoryIdInput = id_categorie || categorie_id
 
-  if (!nom || !type || quantite === undefined || prix === undefined || !id_categorie) {
+  if (!productName || !type || quantite === undefined || prix === undefined || !categoryIdInput) {
     return response.status(400).json({
       error: 'Les champs nom, type, quantite, prix et id_categorie sont obligatoires.'
     })
@@ -69,7 +112,7 @@ app.post('/api/products', async (request, response, next) => {
 
   const quantity = Number(quantite)
   const price = Number(prix)
-  const categoryId = Number(id_categorie)
+  const categoryId = Number(categoryIdInput)
 
   if (!Number.isInteger(quantity) || quantity < 0) {
     return response.status(400).json({ error: 'La quantité doit être un entier positif ou nul.' })
@@ -85,11 +128,13 @@ app.post('/api/products', async (request, response, next) => {
 
   try {
     const result = await pool.query(
-      `INSERT INTO produit (nom, type, quantite, prix, description, id_categorie)
-       VALUES ($1, $2, $3, $4, $5, $6)
-       RETURNING id_produit, nom, type, quantite, prix, description,
-                 date_creation, date_mise_a_jour, id_categorie`,
-      [String(nom).trim(), String(type).trim(), quantity, price, description || null, categoryId]
+      `INSERT INTO produits (name, type, "quantit‚", prix, description, categorie_id, image)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
+       RETURNING produit_id AS id_produit, name AS nom, type,
+                 "quantit‚" AS quantite, prix, description,
+                 date_creation, date_mis_a_jour AS date_mise_a_jour,
+                 categorie_id AS id_categorie, image`,
+      [String(productName).trim(), String(type).trim(), quantity, price, description || null, categoryId, image || null]
     )
 
     response.status(201).json(result.rows[0])
