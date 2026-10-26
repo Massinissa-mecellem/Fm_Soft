@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS categorie (
-  id_categ SERIAL PRIMARY KEY,
+  id_categorie SERIAL PRIMARY KEY,
   nom VARCHAR(120) NOT NULL UNIQUE,
   description TEXT
 );
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS client (
   telephone VARCHAR(30)
 );
 
-CREATE TABLE IF NOT EXISTS produit (
+CREATE TABLE IF NOT EXISTS produits (
   id_produit SERIAL PRIMARY KEY,
   nom VARCHAR(180) NOT NULL,
   type VARCHAR(80) NOT NULL,

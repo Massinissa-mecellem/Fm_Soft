@@ -47,6 +47,18 @@ Pour vérifier que l'API utilise bien votre base PostgreSQL, appelez `GET /api/h
 
 L'API est compatible avec le schéma déjà créé dans votre base : table `categorie` avec `categorie_id`, et table `produits` avec `produit_id`, `name`, `categorie_id`, `image` et la colonne de quantité existante.
 
+Le backend est organisé par responsabilité :
+
+```text
+server/
+├── controllers/   # traitement des requêtes HTTP
+├── middlewares/   # validation et gestion des erreurs
+├── models/        # requêtes PostgreSQL
+├── routes/        # définition des endpoints
+├── db.js          # connexion PostgreSQL
+└── index.js       # démarrage Express
+```
+
 ### Créer un produit
 
 ```http
@@ -66,3 +78,25 @@ Content-Type: application/json
 ```
 
 La réponse `201` contient le produit enregistré. Les routes `GET /api/products`, `GET /api/categories` et `GET /api/health` sont également disponibles.
+
+### Test Postman
+
+Oui, un produit peut être créé avec Postman :
+
+1. Créez ou récupérez une catégorie avec `POST /api/categories` ou `GET /api/categories`.
+2. Utilisez son identifiant `id_categ` dans la requête produit.
+3. Envoyez `POST http://localhost:3001/api/products` avec **Body → raw → JSON** :
+
+```json
+{
+  "nom": "Écran professionnel 24 pouces",
+  "type": "Matériel",
+  "quantite": 10,
+  "prix": 32500,
+  "description": "Écran Full HD professionnel.",
+  "id_categorie": 1,
+  "image": "/uploads/ecran-24.jpg"
+}
+```
+
+Le code `201 Created` confirme l'insertion. Refaites ensuite `GET /api/products` pour vérifier que le produit est relu depuis PostgreSQL.
