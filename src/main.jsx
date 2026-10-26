@@ -79,6 +79,41 @@ const softwareCategories = [
   { label: 'Sécurité & antivirus', icon: ShieldCheck, text: 'Protection des données et des postes' }
 ]
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+
+function normalizeApiProduct(product) {
+  const normalizedType = product.type?.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+  const isHardware = normalizedType?.includes('materiel') || normalizedType?.includes('hardware') || normalizedType?.startsWith('mat')
+  const numericPrice = Number(product.prix) || 0
+  const category = product.categorie_nom || 'Tous'
+
+  return {
+    id: `db-${product.id_produit}`,
+    databaseId: product.id_produit,
+    kind: isHardware ? 'Matériel' : 'Logiciel',
+    category,
+    name: product.nom,
+    price: numericPrice ? `${numericPrice.toLocaleString('fr-FR')} DA` : 'Sur devis',
+    numericPrice,
+    image: product.image || 'https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=900&q=85',
+    summary: product.description || 'Produit FM Soft disponible dans notre catalogue.',
+    description: product.description || 'Contactez FM Soft pour obtenir toutes les informations sur ce produit.',
+    specs: [],
+    technical: {
+      Référence: `FM-${product.id_produit}`,
+      Type: product.type,
+      Quantité: product.quantite
+    },
+    rating: 0,
+    reviews: 0,
+    stock: Number(product.quantite) || 0,
+    updated: product.date_mise_a_jour
+      ? new Date(product.date_mise_a_jour).toLocaleDateString('fr-FR')
+      : 'Non renseignée',
+    demoUrl: '#'
+  }
+}
+
 function Brand({ compact = false }) {
   return <a className={`brand ${compact ? 'brand-compact' : ''}`} href="#accueil" aria-label="FM Soft accueil">
     <span className="brand-mark"><span /></span>
@@ -96,6 +131,9 @@ function App() {
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [productQuantity, setProductQuantity] = useState(1)
   const [favorites, setFavorites] = useState([])
+  const [catalogProducts, setCatalogProducts] = useState(products)
+  const [productsLoading, setProductsLoading] = useState(true)
+  const [productsError, setProductsError] = useState('')
   const [contactSent, setContactSent] = useState(false)
 
   useEffect(() => {
@@ -105,11 +143,29 @@ function App() {
     return () => { document.body.style.overflow = ''; window.removeEventListener('keydown', escape) }
   }, [drawerOpen, cartOpen, selectedProduct])
 
-  const filteredProducts = useMemo(() => products.filter((product) => {
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const response = await fetch(`${API_URL}/products`)
+        if (!response.ok) throw new Error('Impossible de charger les produits.')
+        const data = await response.json()
+        setCatalogProducts(data.map(normalizeApiProduct))
+        setProductsError('')
+      } catch (error) {
+        setProductsError('Le catalogue en ligne est indisponible. Les produits de démonstration sont affichés.')
+      } finally {
+        setProductsLoading(false)
+      }
+    }
+
+    loadProducts()
+  }, [])
+
+  const filteredProducts = useMemo(() => catalogProducts.filter((product) => {
     const categoryMatch = activeCategory === 'Tous' || product.category === activeCategory
     const typeMatch = product.kind === catalogType
     return typeMatch && categoryMatch && `${product.name} ${product.summary}`.toLowerCase().includes(search.toLowerCase())
-  }), [activeCategory, catalogType, search])
+  }), [activeCategory, catalogProducts, catalogType, search])
 
   const addToCart = (product) => {
     setCart((current) => current.some((item) => item.id === product.id)
@@ -195,7 +251,9 @@ function App() {
             {['Matériel', 'Logiciel'].map((type) => <button key={type} className={catalogType === type ? 'active' : ''} onClick={() => { setCatalogType(type); setActiveCategory('Tous') }}><span className="switcher-icon">{type === 'Matériel' ? <Package size={17} /> : <Code2 size={17} />}</span>{type}</button>)}
           </div>
           <div className="category-tabs">{(catalogType === 'Matériel' ? hardwareCategories : ['Tous', ...softwareCategories.map(({ label }) => label)]).map((category) => <button key={category} className={activeCategory === category ? 'active' : ''} onClick={() => setActiveCategory(category)}>{category}<span /></button>)}</div>
-          <div className="product-grid">{filteredProducts.map((product) => <article className="product-card" key={product.id} onClick={() => openProduct(product)}><div className="product-image"><img src={product.image} alt={product.name} />{product.tag && <span className="product-tag">{product.tag}</span>}<button aria-label={`Voir ${product.name}`}><ArrowRight size={17} /></button></div><div className="product-info"><div className="product-meta"><span>{product.kind}</span><span>{product.category}</span></div><h3>{product.name}</h3><p>{product.summary}</p><div className="product-rating"><span>{[1, 2, 3, 4, 5].map((star) => <Star key={star} size={12} fill={star <= Math.round(product.rating) ? 'currentColor' : 'none'} />)}</span><small>{product.rating} ({product.reviews})</small></div><strong>{product.price}</strong></div></article>)}</div>
+          {productsLoading && <div className="catalog-status">Chargement des produits depuis PostgreSQL...</div>}
+          {productsError && <div className="catalog-status catalog-status-warning">{productsError}</div>}
+          <div className="product-grid">{filteredProducts.map((product) => <article className="product-card" key={product.id} onClick={() => openProduct(product)}><div className="product-image"><img src={product.image} alt={product.name} />{product.tag && <span className="product-tag">{product.tag}</span>}<button aria-label={`Voir ${product.name}`}><ArrowRight size={17} /></button></div><div className="product-info"><div className="product-meta"><span>{product.kind}</span><span>{product.category}</span></div><h3>{product.name}</h3><p>{product.summary}</p><div className="product-rating"><span>{[1, 2, 3, 4, 5].map((star) => <Star key={star} size={12} fill={star <= Math.round(product.rating) ? 'currentColor' : 'none'} />)}</span><small>{product.rating ? `${product.rating} (${product.reviews})` : 'Nouvel ajout'}</small></div><strong>{product.price}</strong></div></article>)}</div>
           {!filteredProducts.length && <div className="empty-state"><Search size={24} /><p>Aucun produit ne correspond à votre recherche.</p></div>}
           <div className="center-action"><button className="button button-outline" onClick={() => { setActiveCategory('Tous'); setSearch('') }}>Voir tous les produits <ArrowRight size={17} /></button></div>
         </div>

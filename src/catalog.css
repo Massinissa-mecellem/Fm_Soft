@@ -37,6 +37,22 @@
   padding-top: 95px;
 }
 
+.catalog-status {
+  margin: 22px 0;
+  padding: 12px 15px;
+  border: 1px solid #dfeee5;
+  border-radius: 5px;
+  background: #f3fbf6;
+  color: #2b8c59;
+  font-size: 12px;
+}
+
+.catalog-status-warning {
+  border-color: #f0dfc5;
+  background: #fff9ef;
+  color: #9a6b22;
+}
+
 .partners-intro {
   max-width: 560px;
   margin: 22px auto 38px;
