@@ -288,6 +288,8 @@ function App() {
         </div>
       </section>
 
+      <section className="partners-section section"><div className="container"><div className="section-heading centered"><div><div className="eyebrow muted">Ils nous font confiance</div><h2>Nos partenaires de <em>confiance.</em></h2></div></div><p className="partners-intro">Nous sommes fiers d'accompagner des entreprises, établissements et institutions qui partagent notre exigence de qualité.</p><div className="partners-marquee"><div className="partners-track">{[...partnerLogos, ...partnerLogos].map((logo, index) => <div className="partner-logo" key={`${logo}-${index}`}><img src={`/img/${encodeURIComponent(logo)}`} alt={index < partnerLogos.length ? `Logo partenaire ${index + 1}` : ''} aria-hidden={index >= partnerLogos.length} /></div>)}</div></div></div></section>
+
       <section id="contact" className="contact-section section">
         <div className="container contact-combined">
           <div className="contact-grid">
@@ -313,8 +315,6 @@ function App() {
           </div>
         </div>
       </section>
-
-      <section className="partners-section section"><div className="container"><div className="section-heading centered"><div><div className="eyebrow muted">Ils nous font confiance</div><h2>Nos partenaires de <em>confiance.</em></h2></div></div><p className="partners-intro">Nous sommes fiers d'accompagner des entreprises, établissements et institutions qui partagent notre exigence de qualité.</p><div className="partners-marquee"><div className="partners-track">{[...partnerLogos, ...partnerLogos].map((logo, index) => <div className="partner-logo" key={`${logo}-${index}`}><img src={`/img/${encodeURIComponent(logo)}`} alt={index < partnerLogos.length ? `Logo partenaire ${index + 1}` : ''} aria-hidden={index >= partnerLogos.length} /></div>)}</div></div></div></section>
 
     </main>
 
