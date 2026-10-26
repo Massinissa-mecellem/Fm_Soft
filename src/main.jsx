@@ -12,6 +12,23 @@ import './catalog.css'
 
 const hardwareCategories = ['Tous', 'Imprimante & scanner', 'Ordinateur & PC portable', 'Stockages', 'Composants', 'Périphérique', 'Écrans et moniteur']
 
+const partnerLogos = [
+  "Capture d'écran 2026-10-26 192342.png",
+  "Capture d'écran 2026-10-26 192410.png",
+  "Capture d'écran 2026-10-26 192421.png",
+  "Capture d'écran 2026-10-26 192432.png",
+  "Capture d'écran 2026-10-26 192450.png",
+  "Capture d'écran 2026-10-26 192502.png",
+  "Capture d'écran 2026-10-26 192510.png",
+  "Capture d'écran 2026-10-26 192520.png",
+  "Capture d'écran 2026-10-26 192532.png",
+  "Capture d'écran 2026-10-26 192547.png",
+  "Capture d'écran 2026-10-26 192600.png",
+  "Capture d'écran 2026-10-26 192611.png",
+  "Capture d'écran 2026-10-26 192624.png",
+  "Capture d'écran 2026-10-26 192635.png"
+]
+
 const products = [
   {
     id: 1, kind: 'Matériel', category: 'Imprimante & scanner', name: 'Pack caisse Pro', price: '89 900 DA',
@@ -297,7 +314,7 @@ function App() {
         </div>
       </section>
 
-      <section className="partners-section section"><div className="container"><div className="section-heading centered"><div><div className="eyebrow muted">Ils nous font confiance</div><h2>Nos partenaires de <em>confiance.</em></h2></div></div><p className="partners-intro">Nous sommes fiers d'accompagner des entreprises, établissements et institutions qui partagent notre exigence de qualité.</p><div className="partners-marquee"><div className="partners-track"><img src="/partenaires.jpg" alt="Logos des partenaires de confiance de FM Soft" /><img src="/partenaires.jpg" alt="" aria-hidden="true" /></div></div></div></section>
+      <section className="partners-section section"><div className="container"><div className="section-heading centered"><div><div className="eyebrow muted">Ils nous font confiance</div><h2>Nos partenaires de <em>confiance.</em></h2></div></div><p className="partners-intro">Nous sommes fiers d'accompagner des entreprises, établissements et institutions qui partagent notre exigence de qualité.</p><div className="partners-marquee"><div className="partners-track">{[...partnerLogos, ...partnerLogos].map((logo, index) => <div className="partner-logo" key={`${logo}-${index}`}><img src={`/img/${encodeURIComponent(logo)}`} alt={index < partnerLogos.length ? `Logo partenaire ${index + 1}` : ''} aria-hidden={index >= partnerLogos.length} /></div>)}</div></div></div></section>
 
     </main>
 
