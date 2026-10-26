@@ -1,8 +1,11 @@
 .catalog-switcher {
-  display: inline-flex;
+  display: flex;
+  width: max-content;
   gap: 5px;
   padding: 5px;
   margin-top: 35px;
+  margin-right: auto;
+  margin-left: auto;
   background: #eee9e7;
   border-radius: 8px;
 }

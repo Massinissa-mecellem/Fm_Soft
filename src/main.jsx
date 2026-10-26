@@ -131,8 +131,8 @@ function normalizeApiProduct(product) {
   }
 }
 
-function Brand({ compact = false }) {
-  return <a className={`brand ${compact ? 'brand-compact' : ''}`} href="#accueil" aria-label="FM Soft accueil">
+function Brand({ compact = false, href = '#accueil' }) {
+  return <a className={`brand ${compact ? 'brand-compact' : ''}`} href={href} aria-label="FM Soft accueil">
     <span className="brand-mark"><span /></span>
     <span className="brand-name"><strong>Force Manager</strong><b>SOFT</b></span>
   </a>
@@ -141,7 +141,6 @@ function Brand({ compact = false }) {
 function CatalogPage({ catalogType, setCatalogType, activeCategory, setActiveCategory, hardwareCategories, softwareCategories, productsLoading, productsError, filteredProducts, openProduct, setSearch }) {
   return <section id="catalogue" className="catalog-page section">
     <div className="container">
-      <a className="back-link" href="/"><ArrowRight size={16} className="back-arrow" /> Retour à l'accueil</a>
       <div className="catalog-page-heading"><div><div className="eyebrow muted">Catalogue FM Soft</div><h1>Des solutions pour <em>chaque besoin.</em></h1><p>Choisissez une catégorie, consultez les détails et préparez votre commande.</p></div><button className="button button-outline" onClick={() => { setCatalogType('Matériel'); setActiveCategory('Tous'); setSearch('') }}>Réinitialiser les filtres</button></div>
       <div className="catalog-switcher" role="tablist" aria-label="Type de catalogue">{['Matériel', 'Logiciel'].map((type) => <button key={type} className={catalogType === type ? 'active' : ''} onClick={() => { setCatalogType(type); setActiveCategory('Tous') }}>{type === 'Matériel' ? <Package size={17} /> : <Code2 size={17} />}{type}</button>)}</div>
       <div className="category-tabs">{(catalogType === 'Matériel' ? hardwareCategories : ['Tous', ...softwareCategories.map(({ label }) => label)]).map((category) => <button key={category} className={activeCategory === category ? 'active' : ''} onClick={() => setActiveCategory(category)}>{category}<span /></button>)}</div>
@@ -223,17 +222,19 @@ function App() {
   const whatsappMessage = encodeURIComponent(`Bonjour FM Soft, je souhaite commander : ${cart.map(item => `${item.name} (x${item.quantity})`).join(', ')}.`)
 
   const isCatalogPage = window.location.pathname === '/produits'
+  const homeHref = isCatalogPage ? '/#accueil' : '#accueil'
+  const contactHref = isCatalogPage ? '/#contact' : '#contact'
   const goToProducts = () => { window.location.href = '/produits' }
 
   return <div className={`site-shell ${isCatalogPage ? 'catalog-route' : ''}`}>
     <header className="site-header">
       <div className="container nav-wrap">
-        <Brand />
+        <Brand href={homeHref} />
         <nav className="desktop-nav" aria-label="Navigation principale">
-          <a href="#accueil">Accueil</a>
+          <a href={homeHref}>Accueil</a>
           <a href="/produits">Produits <ChevronDown size={15} /></a>
-          <a href="#a-propos">À propos</a>
-          <a href="#contact">Contact</a>
+          <a href={isCatalogPage ? '/#a-propos' : '#a-propos'}>À propos</a>
+          <a href={contactHref}>Contact</a>
         </nav>
         <div className="nav-actions">
           <label className="nav-search"><Search size={17} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Rechercher..." /></label>
@@ -318,11 +319,11 @@ function App() {
 
     </main>
 
-    <footer className="footer"><div className="container footer-main"><div><Brand compact /><p>Des solutions simples et fiables pour faire grandir votre activité.</p><div className="socials"><a href="#footer" aria-label="Facebook"><Facebook size={17} /></a><a href="#footer" aria-label="Instagram"><Instagram size={17} /></a><a href="#footer" aria-label="Youtube"><Youtube size={17} /></a></div></div><div><h4>Navigation</h4><a href="#accueil">Accueil</a><a href="/produits">Produits</a><a href="#a-propos">À propos</a><a href="#contact">Contact</a></div><div><h4>Nos solutions</h4><a href="/produits">Logiciels de gestion</a><a href="/produits">Matériel informatique</a><a href="/produits">Demander un devis</a><a href="#contact">Support client</a></div><div><h4>Contact</h4><a href="
+    <footer className="footer"><div className="container footer-main"><div><Brand compact href={homeHref} /><p>Des solutions simples et fiables pour faire grandir votre activité.</p><div className="socials"><a href="#footer" aria-label="Facebook"><Facebook size={17} /></a><a href="#footer" aria-label="Instagram"><Instagram size={17} /></a><a href="#footer" aria-label="Youtube"><Youtube size={17} /></a></div></div><div><h4>Navigation</h4><a href={homeHref}>Accueil</a><a href="/produits">Produits</a><a href={isCatalogPage ? '/#a-propos' : '#a-propos'}>À propos</a><a href={contactHref}>Contact</a></div><div><h4>Nos solutions</h4><a href="/produits">Logiciels de gestion</a><a href="/produits">Matériel informatique</a><a href="/produits">Demander un devis</a><a href={contactHref}>Support client</a></div><div><h4>Contact</h4><a href="
       0791 19 78 42"><Phone size={15} /> +213 (0) 791 19 78 42</a><a href="fmsoft.infos@gmail.com"><Mail size={15} /> fmsoft.infos@gmail.com </a><span className="footer-address"><MapPin size={15} /> 93 Rue Abane Ramdane , Tizi Ouzou, Algeria, 15000</span></div></div><div className="container footer-bottom"><span>© 2024 Force Manager SOFT. Tous droits réservés.</span><span>Conçu avec soin pour les professionnels.</span></div></footer>
 
     <div className={`overlay ${drawerOpen || cartOpen || selectedProduct ? 'visible' : ''}`} onClick={() => { setDrawerOpen(false); setCartOpen(false); setSelectedProduct(null) }} />
-    <aside className={`drawer menu-drawer ${drawerOpen ? 'open' : ''}`}><div className="drawer-head"><Brand compact /><button onClick={() => setDrawerOpen(false)} aria-label="Fermer le menu"><X /></button></div><div className="drawer-links"><a href="#accueil" onClick={() => setDrawerOpen(false)}>Accueil</a><button className="drawer-main-link" onClick={() => { setCatalogType('Matériel'); setActiveCategory('Tous'); setDrawerOpen(false); goToProducts() }}>Tous les produits <ChevronRight size={18} /></button><button className="drawer-main-link" onClick={() => { setCatalogType('Matériel'); setActiveCategory('Tous'); setDrawerOpen(false); goToProducts() }}>Matériel <ChevronRight size={18} /></button><div className="drawer-group"><span>Logiciels</span>{softwareCategories.map(({ label }) => <button key={label} onClick={() => { setCatalogType('Logiciel'); setActiveCategory(label); setDrawerOpen(false); goToProducts() }}>{label}<ChevronRight size={16} /></button>)}</div><a href="#contact" onClick={() => setDrawerOpen(false)}>Contact</a></div><div className="drawer-note"><CircleHelp size={18} /><span>Besoin d'aide ?<b>Parler à un conseiller</b></span></div></aside>
+    <aside className={`drawer menu-drawer ${drawerOpen ? 'open' : ''}`}><div className="drawer-head"><Brand compact href={homeHref} /><button onClick={() => setDrawerOpen(false)} aria-label="Fermer le menu"><X /></button></div><div className="drawer-links"><a href={homeHref} onClick={() => setDrawerOpen(false)}>Accueil</a><button className="drawer-main-link" onClick={() => { setCatalogType('Matériel'); setActiveCategory('Tous'); setDrawerOpen(false); goToProducts() }}>Tous les produits <ChevronRight size={18} /></button><button className="drawer-main-link" onClick={() => { setCatalogType('Matériel'); setActiveCategory('Tous'); setDrawerOpen(false); goToProducts() }}>Matériel <ChevronRight size={18} /></button><div className="drawer-group"><span>Logiciels</span>{softwareCategories.map(({ label }) => <button key={label} onClick={() => { setCatalogType('Logiciel'); setActiveCategory(label); setDrawerOpen(false); goToProducts() }}>{label}<ChevronRight size={16} /></button>)}</div><a href={contactHref} onClick={() => setDrawerOpen(false)}>Contact</a></div><div className="drawer-note"><CircleHelp size={18} /><span>Besoin d'aide ?<b>Parler à un conseiller</b></span></div></aside>
 
     <aside className={`drawer cart-drawer ${cartOpen ? 'open' : ''}`}><div className="drawer-head"><div><div className="eyebrow muted">Votre sélection</div><h3>Mon panier <span>{cartCount}</span></h3></div><button onClick={() => setCartOpen(false)} aria-label="Fermer le panier"><X /></button></div>{cart.length ? <><div className="cart-items">{cart.map((item) => <div className="cart-item" key={item.id}><img src={item.image} alt="" /><div><b>{item.name}</b><small>{item.price}</small><div className="quantity"><button onClick={() => setCart(cart.map((cartItem) => cartItem.id === item.id ? { ...cartItem, quantity: Math.max(1, cartItem.quantity - 1) } : cartItem))}>−</button><span>{item.quantity}</span><button onClick={() => setCart(cart.map((cartItem) => cartItem.id === item.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem))}>+</button></div></div><button className="remove-item" onClick={() => setCart(cart.filter((cartItem) => cartItem.id !== item.id))}><X size={15} /></button></div>)}</div><div className="cart-footer"><p><span>Total estimé</span><strong>Sur devis</strong></p><a className="button whatsapp-button" href={`https://wa.me/213550000000?text=${whatsappMessage}`} target="_blank" rel="noreferrer"><Send size={17} /> Commander via WhatsApp</a><small>Votre demande sera transmise directement à notre équipe.</small></div></> : <div className="cart-empty"><ShoppingCart size={35} /><h3>Votre panier est vide</h3><p>Ajoutez un produit pour préparer votre demande de commande.</p><button className="button button-primary" onClick={() => { setCartOpen(false); goToProducts() }}>Voir les produits</button></div>}</aside>
 
