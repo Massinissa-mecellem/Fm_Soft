@@ -4,13 +4,27 @@ import {
   ArrowRight, BadgeCheck, BarChart3, Box, Check, ChevronDown, ChevronRight,
   CircleHelp, Clock3, Code2, Cpu, Download, Facebook, FileText, HardDrive,
   Headphones, Heart, Instagram, Laptop, Mail, MapPin, Menu, Monitor, Package,
-  Phone, Printer, Search, Send, ShieldCheck, ShoppingCart, Sparkles, Star,
+  Phone, Printer, Search, Send, ShoppingCart, Sparkles, Star,
   Store, Truck, Users, X, Youtube
 } from 'lucide-react'
 import './styles.css'
 import './catalog.css'
 
 const hardwareCategories = ['Tous', 'Imprimante & scanner', 'Ordinateur & PC portable', 'Stockages', 'Composants', 'Périphérique', 'Écrans et moniteur']
+
+const categoryIcons = {
+  Tous: Package,
+  'Imprimante & scanner': Printer,
+  'Ordinateur & PC portable': Laptop,
+  Stockages: HardDrive,
+  Composants: Cpu,
+  Périphérique: Box,
+  'Écrans et moniteur': Monitor,
+  Commercial: BarChart3,
+  Santé: BadgeCheck,
+  Service: Headphones,
+  Éducation: Users
+}
 
 const partnerLogos = [
   "Capture d'écran 2026-10-26 192342.png",
@@ -78,22 +92,13 @@ const products = [
     technical: { 'Version actuelle': '2.6.0', 'Système': 'Windows 10/11', 'Type': 'Gestion scolaire', 'Durée de licence': '12 mois renouvelable', 'Déploiement': 'Local ou réseau', 'Utilisateurs': 'Multi-utilisateurs' },
     rating: 4.7, reviews: 16, updated: '2 septembre 2024', description: 'FM School simplifie la gestion des établissements, des inscriptions, des notes, des absences et de la communication avec les parents.', demoUrl: '#'
   },
-  {
-    id: 7, kind: 'Logiciel', category: 'Sécurité & antivirus', name: 'FM Secure', price: 'Sur devis',
-    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=900&q=85',
-    summary: 'Protégez vos postes, vos données et votre activité contre les menaces numériques.',
-    specs: ['Protection en temps réel', 'Gestion centralisée', 'Alertes de sécurité', 'Mises à jour automatiques'],
-    technical: { 'Version actuelle': '2024.9', 'Système': 'Windows 10/11', 'Type': 'Sécurité & antivirus', 'Durée de licence': '12 mois', 'Protection': 'Temps réel et cloud', 'Postes couverts': 'À partir de 5 postes' },
-    rating: 4.9, reviews: 27, updated: '20 septembre 2024', description: 'FM Secure protège les postes et les données de votre entreprise contre les virus, ransomwares et menaces en ligne.', demoUrl: '#'
-  }
 ]
 
 const softwareCategories = [
   { label: 'Commercial', icon: BarChart3, text: 'Ventes, achats et stocks' },
   { label: 'Santé', icon: BadgeCheck, text: 'Cabinets et centres de soins' },
   { label: 'Service', icon: Headphones, text: 'Interventions et clients' },
-  { label: 'Éducation', icon: Users, text: 'Écoles et formations' },
-  { label: 'Sécurité & antivirus', icon: ShieldCheck, text: 'Protection des données et des postes' }
+  { label: 'Éducation', icon: Users, text: 'Écoles et formations' }
 ]
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
@@ -134,7 +139,7 @@ function normalizeApiProduct(product) {
 function Brand({ compact = false, href = '#accueil' }) {
   return <a className={`brand ${compact ? 'brand-compact' : ''}`} href={href} aria-label="FM Soft accueil">
     <span className="brand-mark"><span /></span>
-    <span className="brand-name"><strong>Force Manager</strong><b>SOFT</b></span>
+    <span className="brand-name"><strong>FM</strong><b>SOFT</b></span>
   </a>
 }
 
@@ -143,7 +148,7 @@ function CatalogPage({ catalogType, setCatalogType, activeCategory, setActiveCat
     <div className="container">
       <div className="catalog-page-heading"><div><div className="eyebrow muted">Catalogue FM Soft</div><h1>Des solutions pour <em>chaque besoin.</em></h1><p>Choisissez une catégorie, consultez les détails et préparez votre commande.</p></div><button className="button button-outline" onClick={() => { setCatalogType('Matériel'); setActiveCategory('Tous'); setSearch('') }}>Réinitialiser les filtres</button></div>
       <div className="catalog-switcher" role="tablist" aria-label="Type de catalogue">{['Matériel', 'Logiciel'].map((type) => <button key={type} className={catalogType === type ? 'active' : ''} onClick={() => { setCatalogType(type); setActiveCategory('Tous') }}>{type === 'Matériel' ? <Package size={17} /> : <Code2 size={17} />}{type}</button>)}</div>
-      <div className="category-tabs">{(catalogType === 'Matériel' ? hardwareCategories : ['Tous', ...softwareCategories.map(({ label }) => label)]).map((category) => <button key={category} className={activeCategory === category ? 'active' : ''} onClick={() => setActiveCategory(category)}>{category}<span /></button>)}</div>
+      <div className="category-tabs">{(catalogType === 'Matériel' ? hardwareCategories : ['Tous', ...softwareCategories.map(({ label }) => label)]).map((category) => { const Icon = categoryIcons[category] || Package; return <button key={category} className={activeCategory === category ? 'active' : ''} onClick={() => setActiveCategory(category)}><Icon size={15} />{category}</button> })}</div>
       {productsLoading && <div className="catalog-status">Chargement des produits depuis PostgreSQL...</div>}
       {productsError && <div className="catalog-status catalog-status-warning">{productsError}</div>}
       <div className="product-grid">{filteredProducts.map((product) => <article className="product-card" key={product.id} onClick={() => openProduct(product)}><div className="product-image"><img src={product.image} alt={product.name} />{product.tag && <span className="product-tag">{product.tag}</span>}<button aria-label={`Voir ${product.name}`}><ArrowRight size={17} /></button></div><div className="product-info"><div className="product-meta"><span>{product.kind}</span><span>{product.category}</span></div><h3>{product.name}</h3><p>{product.summary}</p><div className="product-rating"><span>{[1, 2, 3, 4, 5].map((star) => <Star key={star} size={12} fill={star <= Math.round(product.rating) ? 'currentColor' : 'none'} />)}</span><small>{product.rating ? `${product.rating} (${product.reviews})` : 'Nouvel ajout'}</small></div><strong>{product.price}</strong></div></article>)}</div>
@@ -153,10 +158,13 @@ function CatalogPage({ catalogType, setCatalogType, activeCategory, setActiveCat
 }
 
 function App() {
+  const isCatalogPage = window.location.pathname === '/produits'
+  const catalogParams = new URLSearchParams(window.location.search)
+  const catalogTypeFromUrl = catalogParams.get('type') === 'Logiciel' ? 'Logiciel' : 'Matériel'
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
   const [cart, setCart] = useState([])
-  const [catalogType, setCatalogType] = useState('Matériel')
+  const [catalogType, setCatalogType] = useState(catalogTypeFromUrl)
   const [activeCategory, setActiveCategory] = useState('Tous')
   const [search, setSearch] = useState('')
   const [selectedProduct, setSelectedProduct] = useState(null)
@@ -193,6 +201,7 @@ function App() {
   }, [])
 
   const filteredProducts = useMemo(() => catalogProducts.filter((product) => {
+    if (product.category === 'Sécurité & antivirus') return false
     const categoryMatch = activeCategory === 'Tous' || product.category === activeCategory
     const typeMatch = product.kind === catalogType
     return typeMatch && categoryMatch && `${product.name} ${product.summary}`.toLowerCase().includes(search.toLowerCase())
@@ -221,10 +230,10 @@ function App() {
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0)
   const whatsappMessage = encodeURIComponent(`Bonjour FM Soft, je souhaite commander : ${cart.map(item => `${item.name} (x${item.quantity})`).join(', ')}.`)
 
-  const isCatalogPage = window.location.pathname === '/produits'
   const homeHref = isCatalogPage ? '/#accueil' : '#accueil'
   const contactHref = isCatalogPage ? '/#contact' : '#contact'
-  const goToProducts = () => { window.location.href = '/produits' }
+  const goToProducts = (type) => { window.location.href = type ? `/produits?type=${type}` : '/produits' }
+  const quoteWhatsappUrl = `https://wa.me/213791197842?text=${encodeURIComponent('Bonjour FM Soft, je souhaite demander un devis pour vos solutions.')}`
 
   return <div className={`site-shell ${isCatalogPage ? 'catalog-route' : ''}`}>
     <header className="site-header">
@@ -270,7 +279,7 @@ function App() {
         <div className="container intro-grid"><div><div className="eyebrow muted">L'expertise FM Soft</div><h2>La technologie au service de <em>votre quotidien.</em></h2></div><div><p className="lead">Nous concevons des solutions accessibles et fiables pour vous aider à gérer votre activité avec confiance. Du premier conseil au support quotidien, notre équipe reste à vos côtés.</p><a className="arrow-link" href="#contact">Parler à un expert <ArrowRight size={17} /></a></div></div>
         <div className="container service-grid">
           <article className="service-card service-card-image"><img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1000&q=85" alt="Équipe FM Soft en réunion" /><div className="image-caption"><span>Une équipe à votre écoute</span><small>Conseil · Installation · Formation</small></div></article>
-          <article className="service-card"><span className="service-icon"><Code2 /></span><h3>Logiciels métiers</h3><p>Des applications pensées pour vos réalités, simples à prendre en main et puissantes au quotidien.</p><a href="/produits">Voir les logiciels <ArrowRight size={16} /></a></article>
+          <article className="service-card"><span className="service-icon"><Code2 /></span><h3>Logiciels métiers</h3><p>Des applications pensées pour vos réalités, simples à prendre en main et puissantes au quotidien.</p><a href="/produits?type=Logiciel">Voir les logiciels <ArrowRight size={16} /></a></article>
           <article className="service-card"><span className="service-icon"><Monitor /></span><h3>Matériel fiable</h3><p>Du matériel professionnel sélectionné pour sa performance, sa robustesse et sa compatibilité.</p><a href="/produits">Voir le matériel <ArrowRight size={16} /></a></article>
         </div>
       </section>
@@ -280,7 +289,7 @@ function App() {
           <div className="catalog-switcher" role="tablist" aria-label="Type de catalogue">
             {['Matériel', 'Logiciel'].map((type) => <button key={type} className={catalogType === type ? 'active' : ''} onClick={() => { setCatalogType(type); setActiveCategory('Tous') }}><span className="switcher-icon">{type === 'Matériel' ? <Package size={17} /> : <Code2 size={17} />}</span>{type}</button>)}
           </div>
-          <div className="category-tabs">{(catalogType === 'Matériel' ? hardwareCategories : ['Tous', ...softwareCategories.map(({ label }) => label)]).map((category) => <button key={category} className={activeCategory === category ? 'active' : ''} onClick={() => setActiveCategory(category)}>{category}<span /></button>)}</div>
+          <div className="category-tabs">{(catalogType === 'Matériel' ? hardwareCategories : ['Tous', ...softwareCategories.map(({ label }) => label)]).map((category) => { const Icon = categoryIcons[category] || Package; return <button key={category} className={activeCategory === category ? 'active' : ''} onClick={() => setActiveCategory(category)}><Icon size={15} />{category}</button> })}</div>
           {productsLoading && <div className="catalog-status">Chargement des produits depuis PostgreSQL...</div>}
           {productsError && <div className="catalog-status catalog-status-warning">{productsError}</div>}
           <div className="product-grid">{filteredProducts.map((product) => <article className="product-card" key={product.id} onClick={() => openProduct(product)}><div className="product-image"><img src={product.image} alt={product.name} />{product.tag && <span className="product-tag">{product.tag}</span>}<button aria-label={`Voir ${product.name}`}><ArrowRight size={17} /></button></div><div className="product-info"><div className="product-meta"><span>{product.kind}</span><span>{product.category}</span></div><h3>{product.name}</h3><p>{product.summary}</p><div className="product-rating"><span>{[1, 2, 3, 4, 5].map((star) => <Star key={star} size={12} fill={star <= Math.round(product.rating) ? 'currentColor' : 'none'} />)}</span><small>{product.rating ? `${product.rating} (${product.reviews})` : 'Nouvel ajout'}</small></div><strong>{product.price}</strong></div></article>)}</div>
@@ -319,11 +328,11 @@ function App() {
 
     </main>
 
-    <footer className="footer"><div className="container footer-main"><div><Brand compact href={homeHref} /><p>Des solutions simples et fiables pour faire grandir votre activité.</p><div className="socials"><a href="#footer" aria-label="Facebook"><Facebook size={17} /></a><a href="#footer" aria-label="Instagram"><Instagram size={17} /></a><a href="#footer" aria-label="Youtube"><Youtube size={17} /></a></div></div><div><h4>Navigation</h4><a href={homeHref}>Accueil</a><a href="/produits">Produits</a><a href={isCatalogPage ? '/#a-propos' : '#a-propos'}>À propos</a><a href={contactHref}>Contact</a></div><div><h4>Nos solutions</h4><a href="/produits">Logiciels de gestion</a><a href="/produits">Matériel informatique</a><a href="/produits">Demander un devis</a><a href={contactHref}>Support client</a></div><div><h4>Contact</h4><a href="
+    <footer className="footer"><div className="container footer-main"><div><Brand compact href={homeHref} /><p>Des solutions simples et fiables pour faire grandir votre activité.</p><div className="socials"><a href="#footer" aria-label="Facebook"><Facebook size={17} /></a><a href="#footer" aria-label="Instagram"><Instagram size={17} /></a><a href="#footer" aria-label="Youtube"><Youtube size={17} /></a></div></div><div><h4>Navigation</h4><a href={homeHref}>Accueil</a><a href="/produits">Produits</a><a href={isCatalogPage ? '/#a-propos' : '#a-propos'}>À propos</a><a href={contactHref}>Contact</a></div><div>    <h4>Nos solutions</h4><a href="/produits?type=Logiciel">Logiciels de gestion</a><a href="/produits">Matériel informatique</a><a href={quoteWhatsappUrl} target="_blank" rel="noreferrer">Demander un devis</a><a href={contactHref}>Support client</a></div><div><h4>Contact</h4><a href="
       0791 19 78 42"><Phone size={15} /> +213 (0) 791 19 78 42</a><a href="fmsoft.infos@gmail.com"><Mail size={15} /> fmsoft.infos@gmail.com </a><span className="footer-address"><MapPin size={15} /> 93 Rue Abane Ramdane , Tizi Ouzou, Algeria, 15000</span></div></div><div className="container footer-bottom"><span>© 2024 Force Manager SOFT. Tous droits réservés.</span><span>Conçu avec soin pour les professionnels.</span></div></footer>
 
     <div className={`overlay ${drawerOpen || cartOpen || selectedProduct ? 'visible' : ''}`} onClick={() => { setDrawerOpen(false); setCartOpen(false); setSelectedProduct(null) }} />
-    <aside className={`drawer menu-drawer ${drawerOpen ? 'open' : ''}`}><div className="drawer-head"><Brand compact href={homeHref} /><button onClick={() => setDrawerOpen(false)} aria-label="Fermer le menu"><X /></button></div><div className="drawer-links"><a href={homeHref} onClick={() => setDrawerOpen(false)}>Accueil</a><button className="drawer-main-link" onClick={() => { setCatalogType('Matériel'); setActiveCategory('Tous'); setDrawerOpen(false); goToProducts() }}>Tous les produits <ChevronRight size={18} /></button><button className="drawer-main-link" onClick={() => { setCatalogType('Matériel'); setActiveCategory('Tous'); setDrawerOpen(false); goToProducts() }}>Matériel <ChevronRight size={18} /></button><div className="drawer-group"><span>Logiciels</span>{softwareCategories.map(({ label }) => <button key={label} onClick={() => { setCatalogType('Logiciel'); setActiveCategory(label); setDrawerOpen(false); goToProducts() }}>{label}<ChevronRight size={16} /></button>)}</div><a href={contactHref} onClick={() => setDrawerOpen(false)}>Contact</a></div><div className="drawer-note"><CircleHelp size={18} /><span>Besoin d'aide ?<b>Parler à un conseiller</b></span></div></aside>
+    <aside className={`drawer menu-drawer ${drawerOpen ? 'open' : ''}`}><div className="drawer-head"><Brand compact href={homeHref} /><button onClick={() => setDrawerOpen(false)} aria-label="Fermer le menu"><X /></button></div><div className="drawer-links"><a href={homeHref} onClick={() => setDrawerOpen(false)}>Accueil</a><button className="drawer-main-link" onClick={() => { setCatalogType('Matériel'); setActiveCategory('Tous'); setDrawerOpen(false); goToProducts() }}>Tous les produits <ChevronRight size={18} /></button><button className="drawer-main-link" onClick={() => { setCatalogType('Matériel'); setActiveCategory('Tous'); setDrawerOpen(false); goToProducts('Matériel') }}>Matériel <ChevronRight size={18} /></button><div className="drawer-group"><span>Logiciels</span>{softwareCategories.map(({ label }) => <button key={label} onClick={() => { setCatalogType('Logiciel'); setActiveCategory(label); setDrawerOpen(false); goToProducts('Logiciel') }}>{label}<ChevronRight size={16} /></button>)}</div><a href={contactHref} onClick={() => setDrawerOpen(false)}>Contact</a></div><div className="drawer-note"><CircleHelp size={18} /><span>Besoin d'aide ?<b>Parler à un conseiller</b></span></div></aside>
 
     <aside className={`drawer cart-drawer ${cartOpen ? 'open' : ''}`}><div className="drawer-head"><div><div className="eyebrow muted">Votre sélection</div><h3>Mon panier <span>{cartCount}</span></h3></div><button onClick={() => setCartOpen(false)} aria-label="Fermer le panier"><X /></button></div>{cart.length ? <><div className="cart-items">{cart.map((item) => <div className="cart-item" key={item.id}><img src={item.image} alt="" /><div><b>{item.name}</b><small>{item.price}</small><div className="quantity"><button onClick={() => setCart(cart.map((cartItem) => cartItem.id === item.id ? { ...cartItem, quantity: Math.max(1, cartItem.quantity - 1) } : cartItem))}>−</button><span>{item.quantity}</span><button onClick={() => setCart(cart.map((cartItem) => cartItem.id === item.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem))}>+</button></div></div><button className="remove-item" onClick={() => setCart(cart.filter((cartItem) => cartItem.id !== item.id))}><X size={15} /></button></div>)}</div><div className="cart-footer"><p><span>Total estimé</span><strong>Sur devis</strong></p><a className="button whatsapp-button" href={`https://wa.me/213550000000?text=${whatsappMessage}`} target="_blank" rel="noreferrer"><Send size={17} /> Commander via WhatsApp</a><small>Votre demande sera transmise directement à notre équipe.</small></div></> : <div className="cart-empty"><ShoppingCart size={35} /><h3>Votre panier est vide</h3><p>Ajoutez un produit pour préparer votre demande de commande.</p><button className="button button-primary" onClick={() => { setCartOpen(false); goToProducts() }}>Voir les produits</button></div>}</aside>
 
