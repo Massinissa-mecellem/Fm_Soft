@@ -199,7 +199,7 @@ function CatalogPage({ catalogType, setCatalogType, activeCategory, setActiveCat
       <div className="category-tabs">{(catalogType === 'Matériel' ? hardwareCategories : ['Tous', ...softwareCategories.map(({ label }) => label)]).map((category) => { const Icon = categoryIcons[category] || Package; return <button key={category} className={activeCategory === category ? 'active' : ''} onClick={() => setActiveCategory(category)}><Icon size={15} />{category}</button> })}</div>
       {productsLoading && <div className="catalog-status">Chargement des produits depuis PostgreSQL...</div>}
       {productsError && <div className="catalog-status catalog-status-warning">{productsError}</div>}
-      <div className="product-grid">{filteredProducts.map((product) => <article className={`product-card ${product.kind === 'Logiciel' ? 'software-card' : ''}`} key={product.id} onClick={() => openProduct(product)}><div className="product-image"><img src={product.image} alt={product.name} />{product.tag && <span className="product-tag">{product.tag}</span>}<button aria-label={`Voir ${product.name}`}><ArrowRight size={17} /></button></div><div className="product-info"><div className="product-meta"><span>{product.kind}</span><span>{product.category}</span></div><h3>{product.name}</h3><p>{product.summary}</p><div className="product-rating"><span>{[1, 2, 3, 4, 5].map((star) => <Star key={star} size={12} fill={star <= Math.round(product.rating) ? 'currentColor' : 'none'} />)}</span><small>{product.rating ? `${product.rating} (${product.reviews})` : 'Nouvel ajout'}</small></div>{product.serverPrice ? <strong className="software-pricing">Serveur : {product.serverPrice}<br />Client : {product.clientPrice}</strong> : <strong>{product.price}</strong>}</div></article>)}</div>
+      <div className="product-grid">{filteredProducts.map((product) => <article className={`product-card ${product.kind === 'Logiciel' ? 'software-card' : ''}`} key={product.id} onClick={() => openProduct(product)}><div className="product-image"><img src={product.image} alt={product.name} />{product.tag && <span className="product-tag">{product.tag}</span>}<button aria-label={`Voir ${product.name}`}><ArrowRight size={17} /></button></div>{product.kind === 'Logiciel' ? <div className="product-info software-card-info"><h3>{product.name}</h3><p>{product.category === 'Commercial' ? product.name === 'FM MARKET' ? 'Gestion point de vente' : product.name === 'FM STOCK' ? 'Gestion des stocks' : 'Gestion commerciale' : product.category === 'Service' ? 'Location de voiture' : product.category === 'Santé' ? "Laboratoire d'analyses médicales" : 'École de formation'}</p><strong className="software-pricing">Serveur : {product.serverPrice}<br />Client : {product.clientPrice}</strong></div> : <div className="product-info"><div className="product-meta"><span>{product.kind}</span><span>{product.category}</span></div><h3>{product.name}</h3><p>{product.summary}</p><div className="product-rating"><span>{[1, 2, 3, 4, 5].map((star) => <Star key={star} size={12} fill={star <= Math.round(product.rating) ? 'currentColor' : 'none'} />)}</span><small>{product.rating ? `${product.rating} (${product.reviews})` : 'Nouvel ajout'}</small></div><strong>{product.price}</strong></div>}</article>)}</div>
       {!productsLoading && !filteredProducts.length && <div className="empty-state"><Search size={24} /><p>Aucun produit ne correspond à votre recherche.</p></div>}
     </div>
   </section>
@@ -371,7 +371,7 @@ function App() {
 
     <aside className={`drawer cart-drawer ${cartOpen ? 'open' : ''}`}><div className="drawer-head"><div><div className="eyebrow muted">Votre sélection</div><h3>Mon panier <span>{cartCount}</span></h3></div><button onClick={() => setCartOpen(false)} aria-label="Fermer le panier"><X /></button></div>{cart.length ? <><div className="cart-items">{cart.map((item) => <div className="cart-item" key={item.id}><img src={item.image} alt="" /><div><b>{item.name}</b><small>{item.price}</small><div className="quantity"><button onClick={() => setCart(cart.map((cartItem) => cartItem.id === item.id ? { ...cartItem, quantity: Math.max(1, cartItem.quantity - 1) } : cartItem))}>−</button><span>{item.quantity}</span><button onClick={() => setCart(cart.map((cartItem) => cartItem.id === item.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem))}>+</button></div></div><button className="remove-item" onClick={() => setCart(cart.filter((cartItem) => cartItem.id !== item.id))}><X size={15} /></button></div>)}</div><div className="cart-footer"><p><span>Total estimé</span><strong>Sur devis</strong></p><a className="button whatsapp-button" href={`https://wa.me/213550000000?text=${whatsappMessage}`} target="_blank" rel="noreferrer"><Send size={17} /> Commander via WhatsApp</a><small>Votre demande sera transmise directement à notre équipe.</small></div></> : <div className="cart-empty"><ShoppingCart size={35} /><h3>Votre panier est vide</h3><p>Ajoutez un produit pour préparer votre demande de commande.</p><button className="button button-primary" onClick={() => { setCartOpen(false); goToProducts() }}>Voir les produits</button></div>}</aside>
 
-    {selectedProduct && <div className="product-modal">
+    {selectedProduct && selectedProduct.kind === 'Matériel' && <div className="product-modal">
       <button className="modal-close" onClick={() => setSelectedProduct(null)} aria-label="Fermer la fiche"><X /></button>
       <div className="modal-image"><img src={selectedProduct.image} alt={selectedProduct.name} /></div>
       <div className="modal-content">
@@ -382,6 +382,40 @@ function App() {
         {selectedProduct.kind === 'Matériel' ? <div className="modal-commerce"><div className="modal-price"><small>Prix unitaire</small><strong>{selectedProduct.numericPrice.toLocaleString('fr-FR')} DA</strong><span>En stock : {selectedProduct.stock} unités</span></div><div className="quantity-control"><small>Quantité</small><div><button onClick={() => setProductQuantity((quantity) => Math.max(1, quantity - 1))}>−</button><strong>{productQuantity}</strong><button onClick={() => setProductQuantity((quantity) => Math.min(selectedProduct.stock, quantity + 1))}>+</button></div></div><div className="modal-total"><small>Total</small><strong>{(selectedProduct.numericPrice * productQuantity).toLocaleString('fr-FR')} DA</strong></div><button className="button button-primary" onClick={() => addToCart(selectedProduct)}>Ajouter au panier <ShoppingCart size={17} /></button></div> : <div className="modal-commerce software-commerce"><div className="modal-price"><small>Prix TTC</small><strong>Poste serveur : {selectedProduct.serverPrice}<br />Poste client : {selectedProduct.clientPrice}</strong><span>Version actuelle : {selectedProduct.technical['Version actuelle']}</span><span>Mise à jour : {selectedProduct.updated}</span></div><div className="modal-actions"><button className="button button-outline" type="button" disabled><Download size={17} /> Télécharger la version</button><a className="button whatsapp-button" href={`https://wa.me/213791197842?text=${encodeURIComponent(`Bonjour FM Soft, je souhaite demander un devis pour ${selectedProduct.name} (${selectedProduct.serverPrice} serveur / ${selectedProduct.clientPrice} client).`)}`} target="_blank" rel="noreferrer"><Send size={17} /> Demander un devis</a></div><small className="download-note">Le téléchargement sera disponible prochainement.</small></div>}
       </div>
     </div>}
+
+    {selectedProduct && selectedProduct.kind === 'Logiciel' && <section className="software-detail-page">
+      <div className="software-detail-topbar">
+        <span className="product-meta">Logiciel · {selectedProduct.category}</span>
+        <button className="modal-close" onClick={() => setSelectedProduct(null)} aria-label="Fermer la fiche"><X /></button>
+      </div>
+      <div className="software-detail-hero">
+        <div className="software-detail-icon"><img src={selectedProduct.image} alt="" /></div>
+        <div>
+          <h1>{selectedProduct.name}</h1>
+          <p>{selectedProduct.category === 'Commercial' ? selectedProduct.name === 'FM MARKET' ? 'Gestion point de vente' : selectedProduct.name === 'FM STOCK' ? 'Gestion des stocks' : 'Gestion commerciale' : selectedProduct.category === 'Service' ? 'Location de voiture' : selectedProduct.category === 'Santé' ? "Laboratoire d'analyses médicales" : 'École de formation'}</p>
+        </div>
+        <div className="software-detail-actions">
+          <button className="button button-outline" type="button" disabled><Download size={17} /> Télécharger la démo</button>
+          <a className="button whatsapp-button" href={`https://wa.me/213791197842?text=${encodeURIComponent(`Bonjour FM Soft, je souhaite demander un devis pour ${selectedProduct.name}.`)}`} target="_blank" rel="noreferrer"><Send size={17} /> Demander un devis</a>
+          <a className="button button-dark" href={`https://wa.me/213791197842?text=${encodeURIComponent(`Bonjour FM Soft, je souhaite demander une formation pour ${selectedProduct.name}.`)}`} target="_blank" rel="noreferrer"><Users size={17} /> Formation</a>
+        </div>
+      </div>
+      <div className="software-detail-rating"><span>{[1, 2, 3, 4, 5].map((star) => <Star key={star} size={17} fill={star <= Math.round(selectedProduct.rating) ? 'currentColor' : 'none'} />)}</span><b>{selectedProduct.rating ? `${selectedProduct.rating}/5` : 'Évaluation à venir'}</b></div>
+      <div className="software-detail-grid">
+        <div>
+          <h2>Description</h2>
+          <p>{selectedProduct.description}</p>
+          <h2>Fonctionnalités principales</h2>
+          <ul className="software-feature-list">{selectedProduct.specs.map((spec) => <li key={spec}><Check size={17} />{spec}</li>)}</ul>
+        </div>
+        <aside className="software-detail-facts">
+          <h2>Informations</h2>
+          <dl>{Object.entries(selectedProduct.technical).map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+          <div className="software-detail-prices"><strong>Prix TTC</strong><span>Poste serveur : {selectedProduct.serverPrice}</span><span>Poste client : {selectedProduct.clientPrice}</span></div>
+        </aside>
+      </div>
+      <small className="download-note">Le téléchargement de la version actuelle sera disponible prochainement.</small>
+    </section>}
   </div>
 }
 
