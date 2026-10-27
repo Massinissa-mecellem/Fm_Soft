@@ -143,6 +143,29 @@ function Brand({ compact = false, href = '#accueil' }) {
   </a>
 }
 
+function ProductMenu() {
+  const productHref = (type, category = 'Tous') => `/produits?type=${encodeURIComponent(type)}&category=${encodeURIComponent(category)}`
+  return <div className="products-menu">
+    <a className="products-menu-trigger" href="/produits">Produits <ChevronDown size={15} /></a>
+    <div className="products-dropdown">
+      <div className="products-dropdown-group">
+        <strong><Package size={15} /> Matériel</strong>
+        {hardwareCategories.filter((category) => category !== 'Tous').map((category) => {
+          const Icon = categoryIcons[category] || Package
+          return <a key={category} href={productHref('Matériel', category)}><Icon size={14} />{category}</a>
+        })}
+      </div>
+      <div className="products-dropdown-group">
+        <strong><Code2 size={15} /> Logiciel</strong>
+        {softwareCategories.map(({ label }) => {
+          const Icon = categoryIcons[label] || Code2
+          return <a key={label} href={productHref('Logiciel', label)}><Icon size={14} />{label}</a>
+        })}
+      </div>
+    </div>
+  </div>
+}
+
 function CatalogPage({ catalogType, setCatalogType, activeCategory, setActiveCategory, hardwareCategories, softwareCategories, productsLoading, productsError, filteredProducts, openProduct, setSearch }) {
   return <section id="catalogue" className="catalog-page section">
     <div className="container">
@@ -161,11 +184,12 @@ function App() {
   const isCatalogPage = window.location.pathname === '/produits'
   const catalogParams = new URLSearchParams(window.location.search)
   const catalogTypeFromUrl = catalogParams.get('type') === 'Logiciel' ? 'Logiciel' : 'Matériel'
+  const categoryFromUrl = catalogParams.get('category') || 'Tous'
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
   const [cart, setCart] = useState([])
   const [catalogType, setCatalogType] = useState(catalogTypeFromUrl)
-  const [activeCategory, setActiveCategory] = useState('Tous')
+  const [activeCategory, setActiveCategory] = useState(categoryFromUrl)
   const [search, setSearch] = useState('')
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [productQuantity, setProductQuantity] = useState(1)
@@ -241,8 +265,7 @@ function App() {
         <Brand href={homeHref} />
         <nav className="desktop-nav" aria-label="Navigation principale">
           <a href={homeHref}>Accueil</a>
-          <a href="/produits">Produits <ChevronDown size={15} /></a>
-          <a href={isCatalogPage ? '/#a-propos' : '#a-propos'}>À propos</a>
+          <ProductMenu />
           <a href={contactHref}>Contact</a>
         </nav>
         <div className="nav-actions">
@@ -260,9 +283,8 @@ function App() {
         <div className="container hero-grid">
           <div className="hero-copy">
             <div className="eyebrow"><span className="eyebrow-dot" /> Votre partenaire digital depuis 2012</div>
-            <h1>Des solutions qui font <em>avancer</em> votre activité.</h1>
-            <p>Logiciels de gestion et matériel professionnel : FM Soft vous accompagne dans l'achat de matériel informatique et de logiciels adaptés à vous besoins. Des solutions fiables, un service réactif et un accompagnement de proximité</p>
-            <div className="hero-buttons"><button className="button button-primary" onClick={goToProducts}>Explorer nos produits <ArrowRight size={18} /></button><a className="text-link" href="#a-propos">Découvrir FM Soft <ChevronRight size={17} /></a></div>
+            <p>Force Manager Soft (FM Soft) est une entreprise algérienne créée en 2014, spécialisée dans le développement de logiciels de gestion et la vente de matériel informatique. Son objectif est d’accompagner les entreprises dans leur développement en leur proposant des solutions informatiques performantes, adaptées à leurs besoins, afin de simplifier leur gestion, améliorer leur productivité et soutenir leur croissance.</p>
+            <div className="hero-buttons"><button className="button button-primary" onClick={goToProducts}>Explorer nos produits <ArrowRight size={18} /></button></div>
             <div className="hero-proof"><div className="avatar-stack"><span>AM</span><span>SK</span><span>YC</span><span>+</span></div><div><strong>+500 entreprises</strong><small>nous font confiance</small></div></div>
           </div>
           <div className="hero-visual developer-visual">
@@ -273,15 +295,6 @@ function App() {
           </div>
         </div>
         <div className="hero-brands"><div className="container"><span>Des outils pour chaque métier</span><div><b>COMMERCE</b><b>SANTÉ</b><b>ÉDUCATION</b><b>SERVICES</b></div></div></div>
-      </section>
-
-      <section id="a-propos" className="intro-section section">
-        <div className="container intro-grid"><div><div className="eyebrow muted">L'expertise FM Soft</div><h2>La technologie au service de <em>votre quotidien.</em></h2></div><div><p className="lead">Nous concevons des solutions accessibles et fiables pour vous aider à gérer votre activité avec confiance. Du premier conseil au support quotidien, notre équipe reste à vos côtés.</p><a className="arrow-link" href="#contact">Parler à un expert <ArrowRight size={17} /></a></div></div>
-        <div className="container service-grid">
-          <article className="service-card service-card-image"><img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1000&q=85" alt="Équipe FM Soft en réunion" /><div className="image-caption"><span>Une équipe à votre écoute</span><small>Conseil · Installation · Formation</small></div></article>
-          <article className="service-card"><span className="service-icon"><Code2 /></span><h3>Logiciels métiers</h3><p>Des applications pensées pour vos réalités, simples à prendre en main et puissantes au quotidien.</p><a href="/produits?type=Logiciel">Voir les logiciels <ArrowRight size={16} /></a></article>
-          <article className="service-card"><span className="service-icon"><Monitor /></span><h3>Matériel fiable</h3><p>Du matériel professionnel sélectionné pour sa performance, sa robustesse et sa compatibilité.</p><a href="/produits">Voir le matériel <ArrowRight size={16} /></a></article>
-        </div>
       </section>
 
       <section id="produits" className="products-section section home-catalogue-hidden">
@@ -328,7 +341,7 @@ function App() {
 
     </main>
 
-    <footer className="footer"><div className="container footer-main"><div><Brand compact href={homeHref} /><p>Des solutions simples et fiables pour faire grandir votre activité.</p><div className="socials"><a href="#footer" aria-label="Facebook"><Facebook size={17} /></a><a href="#footer" aria-label="Instagram"><Instagram size={17} /></a><a href="#footer" aria-label="Youtube"><Youtube size={17} /></a></div></div><div><h4>Navigation</h4><a href={homeHref}>Accueil</a><a href="/produits">Produits</a><a href={isCatalogPage ? '/#a-propos' : '#a-propos'}>À propos</a><a href={contactHref}>Contact</a></div><div>    <h4>Nos solutions</h4><a href="/produits?type=Logiciel">Logiciels de gestion</a><a href="/produits">Matériel informatique</a><a href={quoteWhatsappUrl} target="_blank" rel="noreferrer">Demander un devis</a><a href={contactHref}>Support client</a></div><div><h4>Contact</h4><a href="
+    <footer className="footer"><div className="container footer-main"><div><Brand compact href={homeHref} /><p>Des solutions simples et fiables pour faire grandir votre activité.</p><div className="socials"><a href="#footer" aria-label="Facebook"><Facebook size={17} /></a><a href="#footer" aria-label="Instagram"><Instagram size={17} /></a><a href="#footer" aria-label="Youtube"><Youtube size={17} /></a></div></div><div><h4>Navigation</h4><a href={homeHref}>Accueil</a><a href="/produits">Produits</a><a href={contactHref}>Contact</a></div><div>    <h4>Nos solutions</h4><a href="/produits?type=Logiciel">Logiciels de gestion</a><a href="/produits">Matériel informatique</a><a href={quoteWhatsappUrl} target="_blank" rel="noreferrer">Demander un devis</a><a href={contactHref}>Support client</a></div><div><h4>Contact</h4><a href="
       0791 19 78 42"><Phone size={15} /> +213 (0) 791 19 78 42</a><a href="fmsoft.infos@gmail.com"><Mail size={15} /> fmsoft.infos@gmail.com </a><span className="footer-address"><MapPin size={15} /> 93 Rue Abane Ramdane , Tizi Ouzou, Algeria, 15000</span></div></div><div className="container footer-bottom"><span>© 2024 Force Manager SOFT. Tous droits réservés.</span><span>Conçu avec soin pour les professionnels.</span></div></footer>
 
     <div className={`overlay ${drawerOpen || cartOpen || selectedProduct ? 'visible' : ''}`} onClick={() => { setDrawerOpen(false); setCartOpen(false); setSelectedProduct(null) }} />
