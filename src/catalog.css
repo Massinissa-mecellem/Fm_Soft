@@ -99,7 +99,7 @@
 }
 
 .hero-intro strong {
-  color: var(--red);
+  color: var(--ink);
   font-weight: 800;
 }
 
@@ -334,6 +334,11 @@
 .partners-section {
   background: var(--cream);
   padding-top: 95px;
+  padding-bottom: 48px;
+}
+
+.contact-section {
+  padding-top: 48px;
 }
 
 .catalog-status {
@@ -422,6 +427,15 @@
 .catalog-page-heading p {
   color: var(--muted);
   font-size: 14px;
+}
+
+.catalog-page .catalog-switcher {
+  margin-top: 0;
+}
+
+.catalog-page .category-tabs {
+  justify-content: center;
+  margin-top: 22px;
 }
 
 .partners-marquee {
