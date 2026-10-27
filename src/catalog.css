@@ -548,6 +548,11 @@
   object-fit: contain;
 }
 
+.software-pricing {
+  font-size: 11px;
+  line-height: 1.55;
+}
+
 .software-commerce {
   position: relative;
 }

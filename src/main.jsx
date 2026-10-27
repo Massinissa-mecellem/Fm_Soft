@@ -75,68 +75,58 @@ const products = [
 
 const softwareProducts = [
   {
-    id: 'software-commercial', kind: 'Logiciel', category: 'Commercial', name: 'Logiciel de gestion commerciale',
+    id: 'software-commercial', kind: 'Logiciel', category: 'Commercial', name: 'FM BUSINESS',
     image: '/icons/gestion%20commerciale.png', price: 'Sur devis',
-    summary: 'Gérez les ventes, achats, clients et fournisseurs depuis une interface claire.',
-    specs: ['Gestion des ventes et achats', 'Gestion clients et fournisseurs', 'Tableaux de bord', 'Historique des opérations'],
-    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Gestion commerciale', 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
-    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Une solution complète pour centraliser les ventes, les achats, les clients, les fournisseurs et les indicateurs essentiels de votre activité commerciale.', demoUrl: null
+    serverPrice: '45 000 DA', clientPrice: '15 000 DA',
+    summary: 'Gérez les approvisionnements, ventes, clients, fournisseurs et finances.',
+    specs: ['Gestion des approvisionnements (achat, commande, stocks, inventaires)', 'Gestion de vente (clients, pro formas, livraisons et factures)', 'Gestion de la trésorerie (compte bancaire et caisse)', 'Gestion des dépenses et bilan'],
+    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Gestion commerciale', 'Déploiement': 'Local ou réseau', 'Poste serveur': '45 000 DA', 'Poste client': '15 000 DA', 'Téléchargement': 'Bientôt disponible' },
+    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'FM BUSINESS est une solution de gestion commerciale pour centraliser les approvisionnements, les ventes, la trésorerie, les dépenses et le bilan de votre activité.', demoUrl: null
   },
   {
-    id: 'software-pos', kind: 'Logiciel', category: 'Commercial', name: 'Logiciel de gestion points de vente',
+    id: 'software-pos', kind: 'Logiciel', category: 'Commercial', name: 'FM MARKET',
     image: '/icons/point%20de%20vente.png', price: 'Sur devis',
-    summary: 'Pilotez vos points de vente et vos encaissements au quotidien.',
-    specs: ['Gestion des encaissements', 'Tickets et reçus', 'Suivi des caisses', 'Statistiques de vente'],
-    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Point de vente', 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
-    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Un logiciel pensé pour simplifier les opérations en caisse, suivre les ventes et garder une vision claire des performances de chaque point de vente.', demoUrl: null
+    serverPrice: '30 000 DA', clientPrice: '15 000 DA',
+    summary: 'Pilotez les encaissements, les stocks et les opérations de vos points de vente.',
+    specs: ['Gestion des approvisionnements (achat, commande, stocks)', 'Gestion des ventes (utilisateur, période, articles)', 'Gestion de la carte de fidélité', 'Intégration de la balance étiqueteuse', 'Gestion des dépenses et bilan', 'Impression des tickets, étiquettes et récapitulations'],
+    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Gestion de caisse et point de vente', 'Déploiement': 'Local ou réseau', 'Poste serveur': '30 000 DA', 'Poste client': '15 000 DA', 'Téléchargement': 'Bientôt disponible' },
+    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'FM MARKET accompagne les commerces dans la gestion des approvisionnements, des ventes, de la fidélité, des dépenses et des impressions en caisse.', demoUrl: null
   },
   {
-    id: 'software-stock', kind: 'Logiciel', category: 'Commercial', name: 'Logiciel de gestion des stocks',
+    id: 'software-stock', kind: 'Logiciel', category: 'Commercial', name: 'FM STOCK',
     image: '/icons/Gestion%20de%20stock.png', price: 'Sur devis',
-    summary: 'Suivez vos articles, mouvements et niveaux de stock.',
-    specs: ['Entrées et sorties de stock', 'Alertes de seuil', 'Inventaires', 'Suivi multi-dépôts'],
-    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Gestion des stocks', 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
-    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Une solution fiable pour suivre les entrées, sorties, inventaires et niveaux de stock afin de réduire les ruptures et les écarts.', demoUrl: null
+    serverPrice: '30 000 DA', clientPrice: '15 000 DA',
+    summary: 'Suivez les approvisionnements, articles, mouvements et dépenses de votre stock.',
+    specs: ['Gestion des approvisionnements (achat, commande, stocks)', 'Gestion des articles par code à barre', 'Fiche de mouvements détaillés et définition des consommations par période et par tiers', 'Gestion des dépenses'],
+    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Gestion de stock', 'Déploiement': 'Local ou réseau', 'Poste serveur': '30 000 DA', 'Poste client': '15 000 DA', 'Téléchargement': 'Bientôt disponible' },
+    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'FM STOCK permet de suivre les approvisionnements, les articles, les mouvements de stock, les consommations et les dépenses avec précision.', demoUrl: null
   },
   {
-    id: 'software-car-rental', kind: 'Logiciel', category: 'Service', name: 'Logiciel de location de voiture',
+    id: 'software-car-rental', kind: 'Logiciel', category: 'Service', name: 'FM CAR',
     image: '/icons/location%20de%20voiture.png', price: 'Sur devis',
-    summary: 'Organisez votre parc automobile et vos contrats de location.',
-    specs: ['Gestion du parc automobile', 'Contrats de location', 'Planning des disponibilités', 'Suivi des clients'],
-    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Location de voiture', 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
-    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Un outil dédié aux agences de location pour gérer les véhicules, les disponibilités, les contrats et le suivi des clients.', demoUrl: null
+    serverPrice: '30 000 DA', clientPrice: '15 000 DA',
+    summary: 'Gérez votre parc automobile, vos clients, vos réservations et vos contrats.',
+    specs: ['Gestion du fichier véhicules', 'Gestion du fichier clients', 'Gestion des réservations avec planning visuel', 'Gestion des dépenses et bilan', 'Impression des contrats de location, BL et listings'],
+    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Location de voiture', 'Déploiement': 'Local ou réseau', 'Poste serveur': '30 000 DA', 'Poste client': '15 000 DA', 'Téléchargement': 'Bientôt disponible' },
+    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'FM CAR aide les agences de location à gérer les véhicules, les clients, les réservations, les dépenses et l’impression des documents de location.', demoUrl: null
   },
   {
-    id: 'software-restaurant', kind: 'Logiciel', category: 'Service', name: 'Logiciel de gestion de la restauration',
-    image: '/icons/coutellerie.ico', price: 'Sur devis',
-    summary: 'Gérez les commandes, les articles et l’activité de votre restaurant.',
-    specs: ['Gestion des commandes', 'Suivi des articles et menus', 'Gestion des ventes', 'Statistiques d’activité'],
-    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Gestion de la restauration', 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
-    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Une solution adaptée aux restaurants et établissements de restauration pour organiser les commandes, les ventes, les articles et le suivi de l’activité.', demoUrl: null
-  },
-  {
-    id: 'software-real-estate', kind: 'Logiciel', category: 'Service', name: 'Logiciel de gestion agence immobilière',
-    image: '/icons/agence%20immobili%C3%A8re.png', price: 'Sur devis',
-    summary: 'Centralisez vos biens, clients, visites et transactions immobilières.',
-    specs: ['Gestion des biens', 'Fiches clients', 'Suivi des visites', 'Suivi des transactions'],
-    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Agence immobilière', 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
-    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Un logiciel pour organiser les biens, prospects, visites et transactions d’une agence immobilière dans un espace centralisé.', demoUrl: null
-  },
-  {
-    id: 'software-laboratory', kind: 'Logiciel', category: 'Santé', name: "Logiciel de gestion laboratoire d'analyse",
+    id: 'software-laboratory', kind: 'Logiciel', category: 'Santé', name: 'BIO SOFT',
     image: '/icons/Laboratoire.png', price: 'Sur devis',
-    summary: 'Structurez les dossiers, analyses et résultats de votre laboratoire.',
-    specs: ['Dossiers patients', 'Gestion des analyses', 'Suivi des résultats', 'Historique sécurisé'],
-    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': "Laboratoire d'analyse", 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
-    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Une solution de gestion pour laboratoires d’analyse afin de structurer les dossiers, demandes d’analyses, résultats et historiques.', demoUrl: null
+    serverPrice: '45 000 DA', clientPrice: '15 000 DA',
+    summary: 'Gérez les prélèvements, dossiers patients, recettes et résultats d’analyse.',
+    specs: ['Gestion des prélèvements', 'Gestion des fichiers patients', 'Gestion des recettes et dépenses', 'Impression des étiquettes, bons de paiement et résultats d’analyse'],
+    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': "Laboratoire d'analyses médicales", 'Déploiement': 'Local ou réseau', 'Poste serveur': '45 000 DA', 'Poste client': '15 000 DA', 'Téléchargement': 'Bientôt disponible' },
+    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'BIO SOFT accompagne les laboratoires d’analyses médicales dans la gestion des prélèvements, des patients, des recettes, des dépenses et des résultats.', demoUrl: null
   },
   {
-    id: 'software-training-school', kind: 'Logiciel', category: 'Éducation', name: 'Logiciel de gestion école de formation',
+    id: 'software-training-school', kind: 'Logiciel', category: 'Éducation', name: 'SCHOOL WAY',
     image: '/icons/ecole%20de%20formation.png', price: 'Sur devis',
-    summary: 'Gérez les apprenants, formations, inscriptions et paiements.',
-    specs: ['Gestion des apprenants', 'Inscriptions aux formations', 'Suivi des paiements', 'Planning des sessions'],
-    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'École de formation', 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
-    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Un outil conçu pour les écoles de formation afin de suivre les apprenants, les inscriptions, les sessions, les paiements et les parcours.', demoUrl: null
+    serverPrice: '45 000 DA', clientPrice: '15 000 DA',
+    summary: 'Gérez les stagiaires, formations, recettes, dépenses et enseignants.',
+    specs: ['Gestion du fichier stagiaires et inscriptions', 'Gestion des groupes et formations', 'Gestion des dépenses et recettes', 'Gestion des fichiers enseignants', 'Impression des attestations, diplômes, reçus et listings'],
+    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'École de formation', 'Déploiement': 'Local ou réseau', 'Poste serveur': '45 000 DA', 'Poste client': '15 000 DA', 'Téléchargement': 'Bientôt disponible' },
+    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'SCHOOL WAY est conçu pour les écoles de formation afin de suivre les stagiaires, les groupes, les formations, les recettes, les dépenses et les enseignants.', demoUrl: null
   }
 ]
 
@@ -218,7 +208,7 @@ function CatalogPage({ catalogType, setCatalogType, activeCategory, setActiveCat
       <div className="category-tabs">{(catalogType === 'Matériel' ? hardwareCategories : ['Tous', ...softwareCategories.map(({ label }) => label)]).map((category) => { const Icon = categoryIcons[category] || Package; return <button key={category} className={activeCategory === category ? 'active' : ''} onClick={() => setActiveCategory(category)}><Icon size={15} />{category}</button> })}</div>
       {productsLoading && <div className="catalog-status">Chargement des produits depuis PostgreSQL...</div>}
       {productsError && <div className="catalog-status catalog-status-warning">{productsError}</div>}
-      <div className="product-grid">{filteredProducts.map((product) => <article className={`product-card ${product.kind === 'Logiciel' ? 'software-card' : ''}`} key={product.id} onClick={() => openProduct(product)}><div className="product-image"><img src={product.image} alt={product.name} />{product.tag && <span className="product-tag">{product.tag}</span>}<button aria-label={`Voir ${product.name}`}><ArrowRight size={17} /></button></div><div className="product-info"><div className="product-meta"><span>{product.kind}</span><span>{product.category}</span></div><h3>{product.name}</h3><p>{product.summary}</p><div className="product-rating"><span>{[1, 2, 3, 4, 5].map((star) => <Star key={star} size={12} fill={star <= Math.round(product.rating) ? 'currentColor' : 'none'} />)}</span><small>{product.rating ? `${product.rating} (${product.reviews})` : 'Nouvel ajout'}</small></div><strong>{product.price}</strong></div></article>)}</div>
+      <div className="product-grid">{filteredProducts.map((product) => <article className={`product-card ${product.kind === 'Logiciel' ? 'software-card' : ''}`} key={product.id} onClick={() => openProduct(product)}><div className="product-image"><img src={product.image} alt={product.name} />{product.tag && <span className="product-tag">{product.tag}</span>}<button aria-label={`Voir ${product.name}`}><ArrowRight size={17} /></button></div><div className="product-info"><div className="product-meta"><span>{product.kind}</span><span>{product.category}</span></div><h3>{product.name}</h3><p>{product.summary}</p><div className="product-rating"><span>{[1, 2, 3, 4, 5].map((star) => <Star key={star} size={12} fill={star <= Math.round(product.rating) ? 'currentColor' : 'none'} />)}</span><small>{product.rating ? `${product.rating} (${product.reviews})` : 'Nouvel ajout'}</small></div>{product.serverPrice ? <strong className="software-pricing">Serveur : {product.serverPrice}<br />Client : {product.clientPrice}</strong> : <strong>{product.price}</strong>}</div></article>)}</div>
       {!productsLoading && !filteredProducts.length && <div className="empty-state"><Search size={24} /><p>Aucun produit ne correspond à votre recherche.</p></div>}
     </div>
   </section>
@@ -399,7 +389,7 @@ function App() {
         <div className="modal-rating"><span>{[1, 2, 3, 4, 5].map((star) => <Star key={star} size={15} fill={star <= Math.round(selectedProduct.rating) ? 'currentColor' : 'none'} />)}</span><b>{selectedProduct.rating}</b><small>({selectedProduct.reviews} évaluations)</small></div>
         <p className="modal-description">{selectedProduct.description}</p>
         <div className="modal-details"><div><h4>Fiche technique</h4><dl>{Object.entries(selectedProduct.technical).map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></div><div><h4>Points clés</h4><ul>{selectedProduct.specs.map((spec) => <li key={spec}><Check size={16} />{spec}</li>)}</ul></div></div>
-        {selectedProduct.kind === 'Matériel' ? <div className="modal-commerce"><div className="modal-price"><small>Prix unitaire</small><strong>{selectedProduct.numericPrice.toLocaleString('fr-FR')} DA</strong><span>En stock : {selectedProduct.stock} unités</span></div><div className="quantity-control"><small>Quantité</small><div><button onClick={() => setProductQuantity((quantity) => Math.max(1, quantity - 1))}>−</button><strong>{productQuantity}</strong><button onClick={() => setProductQuantity((quantity) => Math.min(selectedProduct.stock, quantity + 1))}>+</button></div></div><div className="modal-total"><small>Total</small><strong>{(selectedProduct.numericPrice * productQuantity).toLocaleString('fr-FR')} DA</strong></div><button className="button button-primary" onClick={() => addToCart(selectedProduct)}>Ajouter au panier <ShoppingCart size={17} /></button></div> : <div className="modal-commerce software-commerce"><div className="modal-price"><small>Prix</small><strong>{selectedProduct.price}</strong><span>Version actuelle : {selectedProduct.technical['Version actuelle']}</span><span>Mise à jour : {selectedProduct.updated}</span></div><div className="modal-actions"><button className="button button-outline" type="button" disabled><Download size={17} /> Télécharger la version</button><a className="button whatsapp-button" href={`https://wa.me/213791197842?text=${encodeURIComponent(`Bonjour FM Soft, je souhaite demander un devis pour ${selectedProduct.name} (${selectedProduct.price}).`)}`} target="_blank" rel="noreferrer"><Send size={17} /> Demander un devis</a></div><small className="download-note">Le téléchargement sera disponible prochainement.</small></div>}
+        {selectedProduct.kind === 'Matériel' ? <div className="modal-commerce"><div className="modal-price"><small>Prix unitaire</small><strong>{selectedProduct.numericPrice.toLocaleString('fr-FR')} DA</strong><span>En stock : {selectedProduct.stock} unités</span></div><div className="quantity-control"><small>Quantité</small><div><button onClick={() => setProductQuantity((quantity) => Math.max(1, quantity - 1))}>−</button><strong>{productQuantity}</strong><button onClick={() => setProductQuantity((quantity) => Math.min(selectedProduct.stock, quantity + 1))}>+</button></div></div><div className="modal-total"><small>Total</small><strong>{(selectedProduct.numericPrice * productQuantity).toLocaleString('fr-FR')} DA</strong></div><button className="button button-primary" onClick={() => addToCart(selectedProduct)}>Ajouter au panier <ShoppingCart size={17} /></button></div> : <div className="modal-commerce software-commerce"><div className="modal-price"><small>Prix TTC</small><strong>Poste serveur : {selectedProduct.serverPrice}<br />Poste client : {selectedProduct.clientPrice}</strong><span>Version actuelle : {selectedProduct.technical['Version actuelle']}</span><span>Mise à jour : {selectedProduct.updated}</span></div><div className="modal-actions"><button className="button button-outline" type="button" disabled><Download size={17} /> Télécharger la version</button><a className="button whatsapp-button" href={`https://wa.me/213791197842?text=${encodeURIComponent(`Bonjour FM Soft, je souhaite demander un devis pour ${selectedProduct.name} (${selectedProduct.serverPrice} serveur / ${selectedProduct.clientPrice} client).`)}`} target="_blank" rel="noreferrer"><Send size={17} /> Demander un devis</a></div><small className="download-note">Le téléchargement sera disponible prochainement.</small></div>}
       </div>
     </div>}
   </div>
