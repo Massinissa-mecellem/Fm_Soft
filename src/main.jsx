@@ -186,26 +186,14 @@ function ContactPage({ contactSent, setContactSent }) {
   return <section className="contact-page section">
     <div className="container">
       <div className="contact-page-heading">
-        <div className="eyebrow muted">Contact FM Soft</div>
-        <h1>Parlez-nous de votre <em>projet.</em></h1>
-        <p>Un conseiller FM Soft vous répondra dans les meilleurs délais.</p>
+        <h1>Contactez-nous</h1>
       </div>
-      <div className="contact-page-grid">
-        <div className="contact-page-map">
-          <div className="map-placeholder"><iframe title="Localisation FM Soft à Tizi Ouzou" src="https://www.google.com/maps?q=93+Rue+Abane+Ramdane,+Tizi+Ouzou,+Algeria,+15000&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen /></div>
-          <div className="contact-page-details">
-            <a href="mailto:fmsoft.infos@gmail.com"><Mail size={18} /><span><small>Email</small><b>fmsoft.infos@gmail.com</b></span></a>
-            <a href="tel:+213791197842"><Phone size={18} /><span><small>Téléphone</small><b>+213 (0) 791 19 78 42</b></span></a>
-            <div><MapPin size={18} /><span><small>Adresse</small><b>93 Rue Abane Ramdane<br />Tizi Ouzou, Algeria, 15000</b></span></div>
-          </div>
-        </div>
-        <form className="contact-form contact-page-form" onSubmit={(event) => { event.preventDefault(); setContactSent(true) }}>
-          <div className="form-row"><label>Votre nom<input required placeholder="Nom et prénom" /></label><label>Téléphone<input required placeholder="+213 ..." /></label></div>
-          <label>Votre adresse e-mail<input required type="email" placeholder="vous@entreprise.com" /></label>
-          <label>Votre message<textarea required rows="7" placeholder="Comment pouvons-nous vous aider ?" /></label>
-          <button className="button button-primary" type="submit">{contactSent ? <>Message envoyé <Check size={17} /></> : <>Envoyer le message <Send size={17} /></>}</button>
-        </form>
-      </div>
+      <form className="contact-form contact-page-form" onSubmit={(event) => { event.preventDefault(); setContactSent(true) }}>
+        <div className="form-row"><label>Votre nom<input required placeholder="Nom et prénom" /></label><label>Téléphone<input required placeholder="+213 ..." /></label></div>
+        <label>Votre adresse e-mail<input required type="email" placeholder="vous@entreprise.com" /></label>
+        <label>Votre message<textarea required rows="9" placeholder="Comment pouvons-nous vous aider ?" /></label>
+        <button className="button button-primary" type="submit">{contactSent ? <>Message envoyé <Check size={17} /></> : <>Envoyer le message <Send size={17} /></>}</button>
+      </form>
     </div>
   </section>
 }
@@ -314,8 +302,8 @@ function App() {
         <div className="hero-shape hero-shape-one" /><div className="hero-shape hero-shape-two" />
         <div className="container hero-grid">
           <div className="hero-copy">
-            <div className="eyebrow"><span className="eyebrow-dot" /> Votre partenaire digital depuis 2014</div>
-            <p className="hero-intro">Force Manager Soft (FM Soft) est une entreprise algérienne créée en 2014, spécialisée dans le développement de logiciels de gestion et la vente de matériel informatique. Son objectif est d’accompagner les entreprises dans leur développement en leur proposant des solutions informatiques performantes, adaptées à leurs besoins, afin de simplifier leur gestion, améliorer leur productivité et soutenir leur croissance.</p>
+            <div className="eyebrow hero-eyebrow"><span className="eyebrow-dot" /> Votre partenaire digital depuis 2014</div>
+            <p className="hero-intro"><strong>Force Manager Soft (FM Soft)</strong> est une entreprise algérienne créée en 2014, spécialisée dans le développement de logiciels de gestion et la vente de matériel informatique. Son objectif est d’accompagner les entreprises dans leur développement en leur proposant des solutions informatiques performantes, adaptées à leurs besoins, afin de simplifier leur gestion, améliorer leur productivité et soutenir leur croissance.</p>
             <div className="hero-buttons"><button className="button button-primary" onClick={goToProducts}>Explorer nos produits <ArrowRight size={18} /></button></div>
           </div>
           <div className="hero-visual developer-visual">

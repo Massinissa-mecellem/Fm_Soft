@@ -94,8 +94,19 @@
 
 .hero-intro {
   max-width: 620px !important;
-  font-size: 20px !important;
+  font-size: 21px !important;
   line-height: 1.8 !important;
+}
+
+.hero-intro strong {
+  color: var(--red);
+  font-weight: 800;
+}
+
+.hero-eyebrow {
+  position: relative;
+  top: -12px;
+  font-size: 13px;
 }
 
 .business-proof {
@@ -136,24 +147,18 @@
 }
 
 .contact-page-heading {
-  max-width: 720px;
-  margin-bottom: 48px;
+  max-width: 900px;
+  margin: 0 auto 38px;
+  text-align: center;
 }
 
 .contact-page-heading h1 {
-  margin-bottom: 18px;
-}
-
-.contact-page-heading p {
-  color: var(--muted);
-  font-size: 18px;
+  margin-bottom: 0;
+  font-size: clamp(42px, 5vw, 64px);
 }
 
 .contact-page-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 38px;
-  align-items: stretch;
+  display: block;
 }
 
 .contact-page-map {
@@ -209,11 +214,9 @@
 }
 
 .contact-page-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 100%;
-  padding: 38px;
+  width: min(100%, 900px);
+  margin: 0 auto;
+  padding: 48px;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: #fff;
@@ -221,7 +224,7 @@
 }
 
 .contact-page-form textarea {
-  min-height: 170px;
+  min-height: 220px;
 }
 
 .developer-visual {
@@ -706,7 +709,7 @@
   }
 
   .hero-intro {
-    font-size: 16px !important;
+    font-size: 17px !important;
   }
 
   .home-map-card,
@@ -717,10 +720,6 @@
   .home-map-card .map-placeholder,
   .contact-page-map .map-placeholder {
     min-height: 260px;
-  }
-
-  .contact-page-heading p {
-    font-size: 16px;
   }
 
   .contact-page-details {
