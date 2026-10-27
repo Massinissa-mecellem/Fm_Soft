@@ -71,30 +71,73 @@ const products = [
     technical: { 'Référence': 'FM-SCAN-2D', 'Type': 'Lecteur code-barres', 'Lecture': 'Codes 1D & 2D', 'Connexion': 'USB Plug & Play', 'Vitesse': '300 scans/seconde', 'Résistance': 'Chute jusqu’à 1,5 m' },
     numericPrice: 12800, rating: 4.9, reviews: 31, stock: 25, description: 'Un lecteur fiable et précis pour accélérer l’encaissement et réduire les erreurs de saisie.'
   },
+]
+
+const softwareProducts = [
   {
-    id: 4, kind: 'Logiciel', category: 'Commercial', name: 'FM Commerce', price: 'À partir de 25 000 DA',
-    tag: 'Populaire', image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=85',
-    summary: 'Pilotez vos ventes, votre stock et vos clients depuis une seule interface.',
-    specs: ['Gestion des ventes & achats', 'Stock multi-dépôts', 'Statistiques temps réel', 'Support inclus'],
-    technical: { 'Version actuelle': '4.2.0', 'Système': 'Windows 10/11, Linux', 'Type': 'Gestion commerciale', 'Durée de licence': '12 mois renouvelable', 'Déploiement': 'Local ou réseau', 'Support': 'Inclus' },
-    rating: 4.9, reviews: 42, updated: '15 septembre 2024', description: 'FM Commerce centralise vos ventes, achats, stocks, clients et statistiques dans une interface claire pour piloter votre commerce au quotidien.', demoUrl: '#'
+    id: 'software-commercial', kind: 'Logiciel', category: 'Commercial', name: 'Logiciel de gestion commerciale',
+    image: '/icons/gestion%20commerciale.png', price: 'Sur devis',
+    summary: 'Gérez les ventes, achats, clients et fournisseurs depuis une interface claire.',
+    specs: ['Gestion des ventes et achats', 'Gestion clients et fournisseurs', 'Tableaux de bord', 'Historique des opérations'],
+    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Gestion commerciale', 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
+    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Une solution complète pour centraliser les ventes, les achats, les clients, les fournisseurs et les indicateurs essentiels de votre activité commerciale.', demoUrl: null
   },
   {
-    id: 5, kind: 'Logiciel', category: 'Santé', name: 'FM Santé', price: 'Sur devis',
-    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=85',
-    summary: 'Une solution claire pour organiser les dossiers et rendez-vous de santé.',
-    specs: ['Dossiers patients sécurisés', 'Planning & rendez-vous', 'Facturation', 'Sauvegarde automatique'],
-    technical: { 'Version actuelle': '3.8.1', 'Système': 'Windows 10/11', 'Type': 'Gestion médicale', 'Durée de licence': '12 mois renouvelable', 'Déploiement': 'Local ou réseau', 'Sécurité': 'Chiffrement des données' },
-    rating: 4.8, reviews: 19, updated: '28 août 2024', description: 'FM Santé aide les cabinets et centres de soins à organiser les dossiers patients, rendez-vous, factures et suivis avec un haut niveau de confidentialité.', demoUrl: '#'
+    id: 'software-pos', kind: 'Logiciel', category: 'Commercial', name: 'Logiciel de gestion points de vente',
+    image: '/icons/point%20de%20vente.png', price: 'Sur devis',
+    summary: 'Pilotez vos points de vente et vos encaissements au quotidien.',
+    specs: ['Gestion des encaissements', 'Tickets et reçus', 'Suivi des caisses', 'Statistiques de vente'],
+    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Point de vente', 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
+    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Un logiciel pensé pour simplifier les opérations en caisse, suivre les ventes et garder une vision claire des performances de chaque point de vente.', demoUrl: null
   },
   {
-    id: 6, kind: 'Logiciel', category: 'Éducation', name: 'FM School', price: 'Sur devis',
-    image: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=85',
-    summary: 'La gestion d’établissement pensée pour les équipes pédagogiques.',
-    specs: ['Élèves & inscriptions', 'Notes et absences', 'Paiements & reçus', 'Portail parent'],
-    technical: { 'Version actuelle': '2.6.0', 'Système': 'Windows 10/11', 'Type': 'Gestion scolaire', 'Durée de licence': '12 mois renouvelable', 'Déploiement': 'Local ou réseau', 'Utilisateurs': 'Multi-utilisateurs' },
-    rating: 4.7, reviews: 16, updated: '2 septembre 2024', description: 'FM School simplifie la gestion des établissements, des inscriptions, des notes, des absences et de la communication avec les parents.', demoUrl: '#'
+    id: 'software-stock', kind: 'Logiciel', category: 'Commercial', name: 'Logiciel de gestion des stocks',
+    image: '/icons/Gestion%20de%20stock.png', price: 'Sur devis',
+    summary: 'Suivez vos articles, mouvements et niveaux de stock.',
+    specs: ['Entrées et sorties de stock', 'Alertes de seuil', 'Inventaires', 'Suivi multi-dépôts'],
+    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Gestion des stocks', 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
+    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Une solution fiable pour suivre les entrées, sorties, inventaires et niveaux de stock afin de réduire les ruptures et les écarts.', demoUrl: null
   },
+  {
+    id: 'software-car-rental', kind: 'Logiciel', category: 'Service', name: 'Logiciel de location de voiture',
+    image: '/icons/location%20de%20voiture.png', price: 'Sur devis',
+    summary: 'Organisez votre parc automobile et vos contrats de location.',
+    specs: ['Gestion du parc automobile', 'Contrats de location', 'Planning des disponibilités', 'Suivi des clients'],
+    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Location de voiture', 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
+    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Un outil dédié aux agences de location pour gérer les véhicules, les disponibilités, les contrats et le suivi des clients.', demoUrl: null
+  },
+  {
+    id: 'software-restaurant', kind: 'Logiciel', category: 'Service', name: 'Logiciel de gestion de la restauration',
+    image: '/icons/coutellerie.ico', price: 'Sur devis',
+    summary: 'Gérez les commandes, les articles et l’activité de votre restaurant.',
+    specs: ['Gestion des commandes', 'Suivi des articles et menus', 'Gestion des ventes', 'Statistiques d’activité'],
+    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Gestion de la restauration', 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
+    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Une solution adaptée aux restaurants et établissements de restauration pour organiser les commandes, les ventes, les articles et le suivi de l’activité.', demoUrl: null
+  },
+  {
+    id: 'software-real-estate', kind: 'Logiciel', category: 'Service', name: 'Logiciel de gestion agence immobilière',
+    image: '/icons/agence%20immobili%C3%A8re.png', price: 'Sur devis',
+    summary: 'Centralisez vos biens, clients, visites et transactions immobilières.',
+    specs: ['Gestion des biens', 'Fiches clients', 'Suivi des visites', 'Suivi des transactions'],
+    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'Agence immobilière', 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
+    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Un logiciel pour organiser les biens, prospects, visites et transactions d’une agence immobilière dans un espace centralisé.', demoUrl: null
+  },
+  {
+    id: 'software-laboratory', kind: 'Logiciel', category: 'Santé', name: "Logiciel de gestion laboratoire d'analyse",
+    image: '/icons/Laboratoire.png', price: 'Sur devis',
+    summary: 'Structurez les dossiers, analyses et résultats de votre laboratoire.',
+    specs: ['Dossiers patients', 'Gestion des analyses', 'Suivi des résultats', 'Historique sécurisé'],
+    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': "Laboratoire d'analyse", 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
+    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Une solution de gestion pour laboratoires d’analyse afin de structurer les dossiers, demandes d’analyses, résultats et historiques.', demoUrl: null
+  },
+  {
+    id: 'software-training-school', kind: 'Logiciel', category: 'Éducation', name: 'Logiciel de gestion école de formation',
+    image: '/icons/ecole%20de%20formation.png', price: 'Sur devis',
+    summary: 'Gérez les apprenants, formations, inscriptions et paiements.',
+    specs: ['Gestion des apprenants', 'Inscriptions aux formations', 'Suivi des paiements', 'Planning des sessions'],
+    technical: { 'Version actuelle': '1.0.0', 'Système': 'Windows 10/11', 'Type': 'École de formation', 'Déploiement': 'Local ou réseau', 'Téléchargement': 'Bientôt disponible' },
+    rating: 0, reviews: 0, updated: 'Non renseignée', description: 'Un outil conçu pour les écoles de formation afin de suivre les apprenants, les inscriptions, les sessions, les paiements et les parcours.', demoUrl: null
+  }
 ]
 
 const softwareCategories = [
@@ -175,7 +218,7 @@ function CatalogPage({ catalogType, setCatalogType, activeCategory, setActiveCat
       <div className="category-tabs">{(catalogType === 'Matériel' ? hardwareCategories : ['Tous', ...softwareCategories.map(({ label }) => label)]).map((category) => { const Icon = categoryIcons[category] || Package; return <button key={category} className={activeCategory === category ? 'active' : ''} onClick={() => setActiveCategory(category)}><Icon size={15} />{category}</button> })}</div>
       {productsLoading && <div className="catalog-status">Chargement des produits depuis PostgreSQL...</div>}
       {productsError && <div className="catalog-status catalog-status-warning">{productsError}</div>}
-      <div className="product-grid">{filteredProducts.map((product) => <article className="product-card" key={product.id} onClick={() => openProduct(product)}><div className="product-image"><img src={product.image} alt={product.name} />{product.tag && <span className="product-tag">{product.tag}</span>}<button aria-label={`Voir ${product.name}`}><ArrowRight size={17} /></button></div><div className="product-info"><div className="product-meta"><span>{product.kind}</span><span>{product.category}</span></div><h3>{product.name}</h3><p>{product.summary}</p><div className="product-rating"><span>{[1, 2, 3, 4, 5].map((star) => <Star key={star} size={12} fill={star <= Math.round(product.rating) ? 'currentColor' : 'none'} />)}</span><small>{product.rating ? `${product.rating} (${product.reviews})` : 'Nouvel ajout'}</small></div><strong>{product.price}</strong></div></article>)}</div>
+      <div className="product-grid">{filteredProducts.map((product) => <article className={`product-card ${product.kind === 'Logiciel' ? 'software-card' : ''}`} key={product.id} onClick={() => openProduct(product)}><div className="product-image"><img src={product.image} alt={product.name} />{product.tag && <span className="product-tag">{product.tag}</span>}<button aria-label={`Voir ${product.name}`}><ArrowRight size={17} /></button></div><div className="product-info"><div className="product-meta"><span>{product.kind}</span><span>{product.category}</span></div><h3>{product.name}</h3><p>{product.summary}</p><div className="product-rating"><span>{[1, 2, 3, 4, 5].map((star) => <Star key={star} size={12} fill={star <= Math.round(product.rating) ? 'currentColor' : 'none'} />)}</span><small>{product.rating ? `${product.rating} (${product.reviews})` : 'Nouvel ajout'}</small></div><strong>{product.price}</strong></div></article>)}</div>
       {!productsLoading && !filteredProducts.length && <div className="empty-state"><Search size={24} /><p>Aucun produit ne correspond à votre recherche.</p></div>}
     </div>
   </section>
@@ -230,10 +273,11 @@ function App() {
         const response = await fetch(`${API_URL}/products`)
         if (!response.ok) throw new Error('Impossible de charger les produits.')
         const data = await response.json()
-        setCatalogProducts(data.map(normalizeApiProduct))
+        setCatalogProducts([...data.map(normalizeApiProduct).filter((product) => product.kind === 'Matériel'), ...softwareProducts])
         setProductsError('')
       } catch (error) {
-        setProductsError('Le catalogue en ligne est indisponible. Les produits de démonstration sont affichés.')
+        setCatalogProducts([...products.filter((product) => product.kind === 'Matériel'), ...softwareProducts])
+        setProductsError('Le catalogue matériel en ligne est indisponible. Les logiciels statiques sont affichés.')
       } finally {
         setProductsLoading(false)
       }
@@ -355,7 +399,7 @@ function App() {
         <div className="modal-rating"><span>{[1, 2, 3, 4, 5].map((star) => <Star key={star} size={15} fill={star <= Math.round(selectedProduct.rating) ? 'currentColor' : 'none'} />)}</span><b>{selectedProduct.rating}</b><small>({selectedProduct.reviews} évaluations)</small></div>
         <p className="modal-description">{selectedProduct.description}</p>
         <div className="modal-details"><div><h4>Fiche technique</h4><dl>{Object.entries(selectedProduct.technical).map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></div><div><h4>Points clés</h4><ul>{selectedProduct.specs.map((spec) => <li key={spec}><Check size={16} />{spec}</li>)}</ul></div></div>
-        {selectedProduct.kind === 'Matériel' ? <div className="modal-commerce"><div className="modal-price"><small>Prix unitaire</small><strong>{selectedProduct.numericPrice.toLocaleString('fr-FR')} DA</strong><span>En stock : {selectedProduct.stock} unités</span></div><div className="quantity-control"><small>Quantité</small><div><button onClick={() => setProductQuantity((quantity) => Math.max(1, quantity - 1))}>−</button><strong>{productQuantity}</strong><button onClick={() => setProductQuantity((quantity) => Math.min(selectedProduct.stock, quantity + 1))}>+</button></div></div><div className="modal-total"><small>Total</small><strong>{(selectedProduct.numericPrice * productQuantity).toLocaleString('fr-FR')} DA</strong></div><button className="button button-primary" onClick={() => addToCart(selectedProduct)}>Ajouter au panier <ShoppingCart size={17} /></button></div> : <div className="modal-commerce software-commerce"><div className="modal-price"><small>Prix</small><strong>{selectedProduct.price}</strong><span>Dernière mise à jour : {selectedProduct.updated}</span></div><div className="modal-actions"><a className="button button-outline" href={selectedProduct.demoUrl} download><Download size={17} /> Télécharger la démo</a><a className="button whatsapp-button" href={`https://wa.me/213791197842?text=${encodeURIComponent(`Bonjour FM Soft, je souhaite demander un devis pour ${selectedProduct.name} (${selectedProduct.price}).`)}`} target="_blank" rel="noreferrer"><Send size={17} /> Demander un devis</a></div></div>}
+        {selectedProduct.kind === 'Matériel' ? <div className="modal-commerce"><div className="modal-price"><small>Prix unitaire</small><strong>{selectedProduct.numericPrice.toLocaleString('fr-FR')} DA</strong><span>En stock : {selectedProduct.stock} unités</span></div><div className="quantity-control"><small>Quantité</small><div><button onClick={() => setProductQuantity((quantity) => Math.max(1, quantity - 1))}>−</button><strong>{productQuantity}</strong><button onClick={() => setProductQuantity((quantity) => Math.min(selectedProduct.stock, quantity + 1))}>+</button></div></div><div className="modal-total"><small>Total</small><strong>{(selectedProduct.numericPrice * productQuantity).toLocaleString('fr-FR')} DA</strong></div><button className="button button-primary" onClick={() => addToCart(selectedProduct)}>Ajouter au panier <ShoppingCart size={17} /></button></div> : <div className="modal-commerce software-commerce"><div className="modal-price"><small>Prix</small><strong>{selectedProduct.price}</strong><span>Version actuelle : {selectedProduct.technical['Version actuelle']}</span><span>Mise à jour : {selectedProduct.updated}</span></div><div className="modal-actions"><button className="button button-outline" type="button" disabled><Download size={17} /> Télécharger la version</button><a className="button whatsapp-button" href={`https://wa.me/213791197842?text=${encodeURIComponent(`Bonjour FM Soft, je souhaite demander un devis pour ${selectedProduct.name} (${selectedProduct.price}).`)}`} target="_blank" rel="noreferrer"><Send size={17} /> Demander un devis</a></div><small className="download-note">Le téléchargement sera disponible prochainement.</small></div>}
       </div>
     </div>}
   </div>
