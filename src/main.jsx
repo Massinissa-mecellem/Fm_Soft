@@ -27,20 +27,23 @@ const categoryIcons = {
 }
 
 const partnerLogos = [
-  "Capture d'écran 2026-10-26 192342.png",
-  "Capture d'écran 2026-10-26 192410.png",
-  "Capture d'écran 2026-10-26 192421.png",
-  "Capture d'écran 2026-10-26 192432.png",
-  "Capture d'écran 2026-10-26 192450.png",
-  "Capture d'écran 2026-10-26 192502.png",
-  "Capture d'écran 2026-10-26 192510.png",
-  "Capture d'écran 2026-10-26 192520.png",
-  "Capture d'écran 2026-10-26 192532.png",
-  "Capture d'écran 2026-10-26 192547.png",
-  "Capture d'écran 2026-10-26 192600.png",
-  "Capture d'écran 2026-10-26 192611.png",
-  "Capture d'écran 2026-10-26 192624.png",
-  "Capture d'écran 2026-10-26 192635.png"
+  "421540737_881717170626752_523673560757711644_n.jpg",
+  "APC TIZI OUZOU.jpg",
+  "BGI.JPG",
+  "CAPTO.jpg",
+  "DALI BEL.JPG",
+  "EURL GRAFAB.jpg",
+  "EURL STEEL SOLIDE.jpg",
+  "Giplait.jpg",
+  "LE martinet.jpg",
+  "OSMOSE.jpg",
+  "SARL BTI.jpg",
+  "chennane Agro.bmp",
+  "clinique oliviers.jpg",
+  "fnai.jpg",
+  "hcm.JPG",
+  "logo Ummto.jpg",
+  "logo.jpg"
 ]
 
 const products = [
@@ -281,17 +284,14 @@ function App() {
         <div className="hero-shape hero-shape-one" /><div className="hero-shape hero-shape-two" />
         <div className="container hero-grid">
           <div className="hero-copy">
-            <div className="eyebrow"><span className="eyebrow-dot" /> Votre partenaire digital depuis 2012</div>
+            <div className="eyebrow"><span className="eyebrow-dot" /> Votre partenaire digital depuis 2014</div>
             <h1>Force Manager <em>SOFT</em></h1>
             <p>Force Manager Soft (FM Soft) est une entreprise algérienne créée en 2014, spécialisée dans le développement de logiciels de gestion et la vente de matériel informatique. Son objectif est d’accompagner les entreprises dans leur développement en leur proposant des solutions informatiques performantes, adaptées à leurs besoins, afin de simplifier leur gestion, améliorer leur productivité et soutenir leur croissance.</p>
             <div className="hero-buttons"><button className="button button-primary" onClick={goToProducts}>Explorer nos produits <ArrowRight size={18} /></button></div>
             <div className="hero-proof"><div className="avatar-stack"><span>AM</span><span>SK</span><span>YC</span><span>+</span></div><div><strong>+500 entreprises</strong><small>nous font confiance</small></div></div>
           </div>
           <div className="hero-visual developer-visual">
-            <div className="hero-orbit orbit-one" /><div className="hero-orbit orbit-two" />
-            <div className="developer-photo"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1000&q=85" alt="Développeur travaillant sur une solution FM Soft" /><span className="photo-badge"><Code2 size={16} /><b>Des solutions sur mesure</b><small>Développement · Conseil · Support</small></span></div>
-            <div className="floating-card floating-card-top"><span className="float-icon red"><Code2 size={17} /></span><div><small>Expertise digitale</small><b>Des outils pensés pour vous</b></div></div>
-            <div className="floating-card floating-card-bottom"><span className="float-icon dark"><Check size={17} /></span><div><b>Un accompagnement humain</b><small>À chaque étape de votre projet</small></div></div>
+            <div className="developer-photo"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=85" alt="Ordinateur utilisé pour développer une solution FM Soft" /></div>
           </div>
         </div>
         <div className="hero-brands"><div className="container"><span>Des outils pour chaque métier</span><div><b>COMMERCE</b><b>SANTÉ</b><b>ÉDUCATION</b><b>SERVICES</b></div></div></div>
@@ -311,15 +311,13 @@ function App() {
         </div>
       </section>
 
-      <section className="partners-section section"><div className="container"><div className="section-heading centered"><div><div className="eyebrow muted">Ils nous font confiance</div><h2>Nos partenaires de <em>confiance.</em></h2></div></div><p className="partners-intro">Nous sommes fiers d'accompagner des entreprises, établissements et institutions qui partagent notre exigence de qualité.</p><div className="partners-marquee"><div className="partners-track">{[...partnerLogos, ...partnerLogos].map((logo, index) => <div className="partner-logo" key={`${logo}-${index}`}><img src={`/img/${encodeURIComponent(logo)}`} alt={index < partnerLogos.length ? `Logo partenaire ${index + 1}` : ''} aria-hidden={index >= partnerLogos.length} /></div>)}</div></div></div></section>
+      <section className="partners-section section"><div className="container"><p className="partners-intro">Nous sommes fiers d'accompagner des entreprises, établissements et institutions qui partagent notre exigence de qualité.</p><div className="partners-marquee"><div className="partners-track">{[...partnerLogos, ...partnerLogos].map((logo, index) => <div className="partner-logo" key={`${logo}-${index}`}><img src={`/references/${encodeURIComponent(logo)}`} alt={index < partnerLogos.length ? `Logo partenaire ${index + 1}` : ''} aria-hidden={index >= partnerLogos.length} /></div>)}</div></div></div></section>
 
       <section id="contact" className="contact-section section">
         <div className="container contact-combined">
           <div className="contact-grid">
             <div>
-              <div className="eyebrow muted">Une question ?</div>
-              <h2>Construisons la suite <em>ensemble.</em></h2>
-              <p>Parlez-nous de votre projet. Un conseiller FM Soft vous répondra dans les meilleurs délais.</p>
+              <p className="contact-intro">Parlez-nous de votre projet. Un conseiller FM Soft vous répondra dans les meilleurs délais.</p>
               <div className="contact-details">
                 <a href="tel:+213791197842"><span><Phone size={18} /></span><div><small>Appelez-nous</small><b>+213 (0) 791 19 78 42</b></div></a>
                 <a href="mailto:fmsoft.infos@gmail.com"><span><Mail size={18} /></span><div><small>Écrivez-nous</small><b>fmsoft.infos@gmail.com</b></div></a>
