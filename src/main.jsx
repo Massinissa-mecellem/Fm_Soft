@@ -138,8 +138,7 @@ function normalizeApiProduct(product) {
 
 function Brand({ compact = false, href = '#accueil' }) {
   return <a className={`brand ${compact ? 'brand-compact' : ''}`} href={href} aria-label="FM Soft accueil">
-    <span className="brand-mark"><span /></span>
-    <span className="brand-name"><strong>FM</strong><b>SOFT</b></span>
+    <img className="brand-logo" src="/fm-soft-logo.png" alt="Force Manager SOFT" />
   </a>
 }
 
@@ -283,6 +282,7 @@ function App() {
         <div className="container hero-grid">
           <div className="hero-copy">
             <div className="eyebrow"><span className="eyebrow-dot" /> Votre partenaire digital depuis 2012</div>
+            <h1>Force Manager <em>SOFT</em></h1>
             <p>Force Manager Soft (FM Soft) est une entreprise algérienne créée en 2014, spécialisée dans le développement de logiciels de gestion et la vente de matériel informatique. Son objectif est d’accompagner les entreprises dans leur développement en leur proposant des solutions informatiques performantes, adaptées à leurs besoins, afin de simplifier leur gestion, améliorer leur productivité et soutenir leur croissance.</p>
             <div className="hero-buttons"><button className="button button-primary" onClick={goToProducts}>Explorer nos produits <ArrowRight size={18} /></button></div>
             <div className="hero-proof"><div className="avatar-stack"><span>AM</span><span>SK</span><span>YC</span><span>+</span></div><div><strong>+500 entreprises</strong><small>nous font confiance</small></div></div>

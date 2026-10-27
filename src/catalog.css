@@ -96,6 +96,18 @@
   min-height: 500px;
 }
 
+.brand-logo {
+  display: block;
+  width: 116px;
+  height: 58px;
+  object-fit: contain;
+}
+
+.brand-compact .brand-logo {
+  width: 100px;
+  height: 52px;
+}
+
 .developer-photo {
   position: relative;
   z-index: 2;
@@ -335,12 +347,12 @@
 
 .partner-logo {
   display: grid;
-  flex: 0 0 150px;
+  flex: 0 0 170px;
   place-items: center;
-  width: 150px;
-  height: 92px;
+  width: 170px;
+  height: 150px;
   margin-right: 16px;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid #eee8e6;
   border-radius: 8px;
   background: #fff;
@@ -349,9 +361,14 @@
 .partner-logo img {
   display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
+  max-height: 128px;
   margin: 0;
   object-fit: contain;
+}
+
+.partner-logo img {
+  max-height: 100%;
 }
 
 .product-rating,
@@ -561,11 +578,6 @@
 
   .catalog-page-heading .button {
     margin-top: 15px;
-  }
-
-  .partners-track img {
-    width: 530px;
-    height: 190px;
   }
 
   .modal-details {
