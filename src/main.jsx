@@ -182,8 +182,37 @@ function CatalogPage({ catalogType, setCatalogType, activeCategory, setActiveCat
   </section>
 }
 
+function ContactPage({ contactSent, setContactSent }) {
+  return <section className="contact-page section">
+    <div className="container">
+      <div className="contact-page-heading">
+        <div className="eyebrow muted">Contact FM Soft</div>
+        <h1>Parlez-nous de votre <em>projet.</em></h1>
+        <p>Un conseiller FM Soft vous répondra dans les meilleurs délais.</p>
+      </div>
+      <div className="contact-page-grid">
+        <div className="contact-page-map">
+          <div className="map-placeholder"><iframe title="Localisation FM Soft à Tizi Ouzou" src="https://www.google.com/maps?q=93+Rue+Abane+Ramdane,+Tizi+Ouzou,+Algeria,+15000&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen /></div>
+          <div className="contact-page-details">
+            <a href="mailto:fmsoft.infos@gmail.com"><Mail size={18} /><span><small>Email</small><b>fmsoft.infos@gmail.com</b></span></a>
+            <a href="tel:+213791197842"><Phone size={18} /><span><small>Téléphone</small><b>+213 (0) 791 19 78 42</b></span></a>
+            <div><MapPin size={18} /><span><small>Adresse</small><b>93 Rue Abane Ramdane<br />Tizi Ouzou, Algeria, 15000</b></span></div>
+          </div>
+        </div>
+        <form className="contact-form contact-page-form" onSubmit={(event) => { event.preventDefault(); setContactSent(true) }}>
+          <div className="form-row"><label>Votre nom<input required placeholder="Nom et prénom" /></label><label>Téléphone<input required placeholder="+213 ..." /></label></div>
+          <label>Votre adresse e-mail<input required type="email" placeholder="vous@entreprise.com" /></label>
+          <label>Votre message<textarea required rows="7" placeholder="Comment pouvons-nous vous aider ?" /></label>
+          <button className="button button-primary" type="submit">{contactSent ? <>Message envoyé <Check size={17} /></> : <>Envoyer le message <Send size={17} /></>}</button>
+        </form>
+      </div>
+    </div>
+  </section>
+}
+
 function App() {
   const isCatalogPage = window.location.pathname === '/produits'
+  const isContactPage = window.location.pathname === '/contact'
   const catalogParams = new URLSearchParams(window.location.search)
   const catalogTypeFromUrl = catalogParams.get('type') === 'Logiciel' ? 'Logiciel' : 'Matériel'
   const categoryFromUrl = catalogParams.get('category') || 'Tous'
@@ -256,8 +285,8 @@ function App() {
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0)
   const whatsappMessage = encodeURIComponent(`Bonjour FM Soft, je souhaite commander : ${cart.map(item => `${item.name} (x${item.quantity})`).join(', ')}.`)
 
-  const homeHref = isCatalogPage ? '/#accueil' : '#accueil'
-  const contactHref = isCatalogPage ? '/#contact' : '#contact'
+  const homeHref = isCatalogPage || isContactPage ? '/#accueil' : '#accueil'
+  const contactHref = '/contact'
   const goToProducts = (type) => { window.location.href = type ? `/produits?type=${type}` : '/produits' }
   const quoteWhatsappUrl = `https://wa.me/213791197842?text=${encodeURIComponent('Bonjour FM Soft, je souhaite demander un devis pour vos solutions.')}`
 
@@ -280,24 +309,23 @@ function App() {
 
     <main>
       {isCatalogPage && <CatalogPage catalogType={catalogType} setCatalogType={setCatalogType} activeCategory={activeCategory} setActiveCategory={setActiveCategory} hardwareCategories={hardwareCategories} softwareCategories={softwareCategories} productsLoading={productsLoading} productsError={productsError} filteredProducts={filteredProducts} openProduct={openProduct} setSearch={setSearch} />}
-      <section id="accueil" className="hero">
+      {isContactPage && <ContactPage contactSent={contactSent} setContactSent={setContactSent} />}
+      {!isCatalogPage && !isContactPage && <section id="accueil" className="hero">
         <div className="hero-shape hero-shape-one" /><div className="hero-shape hero-shape-two" />
         <div className="container hero-grid">
           <div className="hero-copy">
             <div className="eyebrow"><span className="eyebrow-dot" /> Votre partenaire digital depuis 2014</div>
-            <h1>Force Manager <em>SOFT</em></h1>
-            <p>Force Manager Soft (FM Soft) est une entreprise algérienne créée en 2014, spécialisée dans le développement de logiciels de gestion et la vente de matériel informatique. Son objectif est d’accompagner les entreprises dans leur développement en leur proposant des solutions informatiques performantes, adaptées à leurs besoins, afin de simplifier leur gestion, améliorer leur productivité et soutenir leur croissance.</p>
+            <p className="hero-intro">Force Manager Soft (FM Soft) est une entreprise algérienne créée en 2014, spécialisée dans le développement de logiciels de gestion et la vente de matériel informatique. Son objectif est d’accompagner les entreprises dans leur développement en leur proposant des solutions informatiques performantes, adaptées à leurs besoins, afin de simplifier leur gestion, améliorer leur productivité et soutenir leur croissance.</p>
             <div className="hero-buttons"><button className="button button-primary" onClick={goToProducts}>Explorer nos produits <ArrowRight size={18} /></button></div>
-            <div className="hero-proof"><div className="avatar-stack"><span>AM</span><span>SK</span><span>YC</span><span>+</span></div><div><strong>+500 entreprises</strong><small>nous font confiance</small></div></div>
           </div>
           <div className="hero-visual developer-visual">
-            <div className="developer-photo"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=85" alt="Ordinateur utilisé pour développer une solution FM Soft" /></div>
+            <div className="developer-photo"><img src="https://unsplash.com/photos/vpOeXr5wmR4/download?force=true&w=1200" alt="Ordinateur portable noir allumé sur une table" /></div>
           </div>
         </div>
         <div className="hero-brands"><div className="container"><span>Des outils pour chaque métier</span><div><b>COMMERCE</b><b>SANTÉ</b><b>ÉDUCATION</b><b>SERVICES</b></div></div></div>
-      </section>
+      </section>}
 
-      <section id="produits" className="products-section section home-catalogue-hidden">
+      {!isCatalogPage && !isContactPage && <section id="produits" className="products-section section home-catalogue-hidden">
         <div className="container"><div className="section-heading"><div><div className="eyebrow muted">Notre catalogue</div><h2>Tout ce qu'il faut pour <em>bien gérer.</em></h2></div><p>Explorez nos solutions et trouvez l'outil adapté à votre activité.</p></div>
           <div className="catalog-switcher" role="tablist" aria-label="Type de catalogue">
             {['Matériel', 'Logiciel'].map((type) => <button key={type} className={catalogType === type ? 'active' : ''} onClick={() => { setCatalogType(type); setActiveCategory('Tous') }}><span className="switcher-icon">{type === 'Matériel' ? <Package size={17} /> : <Code2 size={17} />}</span>{type}</button>)}
@@ -309,33 +337,18 @@ function App() {
           {!filteredProducts.length && <div className="empty-state"><Search size={24} /><p>Aucun produit ne correspond à votre recherche.</p></div>}
           <div className="center-action"><button className="button button-outline" onClick={() => { setActiveCategory('Tous'); setSearch('') }}>Voir tous les produits <ArrowRight size={17} /></button></div>
         </div>
-      </section>
+      </section>}
 
-      <section className="partners-section section"><div className="container"><p className="partners-intro">Nous sommes fiers d'accompagner des entreprises, établissements et institutions qui partagent notre exigence de qualité.</p><div className="partners-marquee"><div className="partners-track">{[...partnerLogos, ...partnerLogos].map((logo, index) => <div className="partner-logo" key={`${logo}-${index}`}><img src={`/references/${encodeURIComponent(logo)}`} alt={index < partnerLogos.length ? `Logo partenaire ${index + 1}` : ''} aria-hidden={index >= partnerLogos.length} /></div>)}</div></div></div></section>
+      {!isCatalogPage && !isContactPage && <><section className="business-proof"><div className="container"><div className="hero-proof"><div className="avatar-stack"><span>AM</span><span>SK</span><span>YC</span><span>+</span></div><div><strong>+1000 entreprises</strong><small>nous font confiance</small></div></div></div></section><section className="partners-section section"><div className="container"><p className="partners-intro">Nous sommes fiers d'accompagner des entreprises, établissements et institutions qui partagent notre exigence de qualité.</p><div className="partners-marquee"><div className="partners-track">{[...partnerLogos, ...partnerLogos].map((logo, index) => <div className="partner-logo" key={`${logo}-${index}`}><img src={`/references/${encodeURIComponent(logo)}`} alt={index < partnerLogos.length ? `Logo partenaire ${index + 1}` : ''} aria-hidden={index >= partnerLogos.length} /></div>)}</div></div></div></section></>}
 
-      <section id="contact" className="contact-section section">
+      {!isCatalogPage && !isContactPage && <section id="contact" className="contact-section section">
         <div className="container contact-combined">
-          <div className="contact-grid">
-            <div>
-              <p className="contact-intro">Parlez-nous de votre projet. Un conseiller FM Soft vous répondra dans les meilleurs délais.</p>
-              <div className="contact-details">
-                <a href="tel:+213791197842"><span><Phone size={18} /></span><div><small>Appelez-nous</small><b>+213 (0) 791 19 78 42</b></div></a>
-                <a href="mailto:fmsoft.infos@gmail.com"><span><Mail size={18} /></span><div><small>Écrivez-nous</small><b>fmsoft.infos@gmail.com</b></div></a>
-              </div>
-            </div>
-            <form className="contact-form" onSubmit={(event) => { event.preventDefault(); setContactSent(true) }}>
-              <div className="form-row"><label>Votre nom<input required placeholder="Nom et prénom" /></label><label>Téléphone<input required placeholder="+213 ..." /></label></div>
-              <label>Votre adresse e-mail<input required type="email" placeholder="vous@entreprise.com" /></label>
-              <label>Votre message<textarea required rows="4" placeholder="Comment pouvons-nous vous aider ?" /></label>
-              <button className="button button-primary" type="submit">{contactSent ? <>Message envoyé <Check size={17} /></> : <>Envoyer le message <Send size={17} /></>}</button>
-            </form>
-          </div>
-          <div className="map-card">
+          <div className="map-card home-map-card">
             <div className="map-placeholder"><iframe title="Localisation FM Soft à Tizi Ouzou" src="https://www.google.com/maps?q=93+Rue+Abane+Ramdane,+Tizi+Ouzou,+Algeria,+15000&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen /></div>
-            <div className="address-card"><div className="eyebrow muted">Nous rendre visite</div><h3>Notre adresse</h3><p><MapPin size={17} /> 93 Rue Abane Ramdane<br />Tizi Ouzou, Algeria, 15000</p><a className="arrow-link" href="https://www.google.com/maps/search/?api=1&query=93+Rue+Abane+Ramdane,+Tizi+Ouzou,+Algeria,+15000" target="_blank" rel="noreferrer">Ouvrir dans Google Maps <ArrowRight size={16} /></a></div>
+            <div className="address-card"><div className="eyebrow muted">Nous contacter</div><h3>Nos coordonnées</h3><p><Mail size={17} /> fmsoft.infos@gmail.com</p><p><Phone size={17} /> +213 (0) 791 19 78 42</p><p><MapPin size={17} /> 93 Rue Abane Ramdane<br />Tizi Ouzou, Algeria, 15000</p><a className="arrow-link" href="https://www.google.com/maps/search/?api=1&query=93+Rue+Abane+Ramdane,+Tizi+Ouzou,+Algeria,+15000" target="_blank" rel="noreferrer">Ouvrir dans Google Maps <ArrowRight size={16} /></a></div>
           </div>
         </div>
-      </section>
+      </section>}
 
     </main>
 
