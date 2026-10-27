@@ -179,23 +179,14 @@ function Brand({ compact = false, href = '#accueil' }) {
 }
 
 function ProductMenu() {
-  const productHref = (type, category = 'Tous') => `/produits?type=${encodeURIComponent(type)}&category=${encodeURIComponent(category)}`
   return <div className="products-menu">
     <a className="products-menu-trigger" href="/produits">Produits <ChevronDown size={15} /></a>
     <div className="products-dropdown">
       <div className="products-dropdown-group">
-        <strong><Package size={15} /> Matériel</strong>
-        {hardwareCategories.filter((category) => category !== 'Tous').map((category) => {
-          const Icon = categoryIcons[category] || Package
-          return <a key={category} href={productHref('Matériel', category)}><Icon size={14} />{category}</a>
-        })}
+        <a href="/produits?type=Matériel"><Package size={15} /> Matériel</a>
       </div>
       <div className="products-dropdown-group">
-        <strong><Code2 size={15} /> Logiciel</strong>
-        {softwareCategories.map(({ label }) => {
-          const Icon = categoryIcons[label] || Code2
-          return <a key={label} href={productHref('Logiciel', label)}><Icon size={14} />{label}</a>
-        })}
+        <a href="/produits?type=Logiciel"><Code2 size={15} /> Logiciel</a>
       </div>
     </div>
   </div>
@@ -311,7 +302,7 @@ function App() {
   const goToProducts = (type) => { window.location.href = type ? `/produits?type=${type}` : '/produits' }
   const quoteWhatsappUrl = `https://wa.me/213791197842?text=${encodeURIComponent('Bonjour FM Soft, je souhaite demander un devis pour vos solutions.')}`
 
-  return <div className={`site-shell ${isCatalogPage ? 'catalog-route' : ''}`}>
+  return <div className={`site-shell ${isCatalogPage ? 'catalog-route' : ''} ${!isCatalogPage && !isContactPage ? 'home-route' : ''}`}>
     <header className="site-header">
       <div className="container nav-wrap">
         <Brand href={homeHref} />
@@ -343,7 +334,6 @@ function App() {
             <div className="developer-photo"><img src="https://unsplash.com/photos/vpOeXr5wmR4/download?force=true&w=1200" alt="Ordinateur portable noir allumé sur une table" /></div>
           </div>
         </div>
-        <div className="hero-brands"><div className="container"><span>Des outils pour chaque métier</span><div><b>COMMERCE</b><b>SANTÉ</b><b>ÉDUCATION</b><b>SERVICES</b></div></div></div>
       </section>}
 
       {!isCatalogPage && !isContactPage && <section id="produits" className="products-section section home-catalogue-hidden">
